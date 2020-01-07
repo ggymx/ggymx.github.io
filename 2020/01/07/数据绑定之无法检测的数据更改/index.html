@@ -7,10 +7,10 @@
 
     
 
-    <title>父子通讯之单向数据流 | 放杨的猩猩~*</title>
+    <title>数据绑定之无法检测的数据更改 | 放杨的猩猩~*</title>
     <meta name="author" content="ggymx" />
     <meta name="keywords" content="" />
-    <meta name="description" content="react单向数据流：如父组件通过props将数据传递给子组件react父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式react更改传入的prop..." />
+    <meta name="description" content="Vue组件内是双向绑定，组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定），但有两种情况下，更改组件内的数据不会自动刷新视图一：Vue不能检测到对象属性的添加或删除错误写法：this.$data.test.a=xxx正确写法：vue.set(object,key,value) 或 Object.assign()如： 1. this.$set(this.test,’a’,xxx) 或 Vue.set(this.test,’a’,xxx) 2. this.t..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -101,7 +101,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#react"><span class="toc-number">1.</span> <span class="toc-text">react</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue"><span class="toc-number">2.</span> <span class="toc-text">vue</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一：Vue不能检测到对象属性的添加或删除"><span class="toc-number">1.</span> <span class="toc-text">一：Vue不能检测到对象属性的添加或删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二：通过改动两种方式改动数组时，Vue检测不到变动："><span class="toc-number">2.</span> <span class="toc-text">二：通过改动两种方式改动数组时，Vue检测不到变动：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-利用索引直接设置一个项；"><span class="toc-number">2.1.</span> <span class="toc-text">1.利用索引直接设置一个项；</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-修改数组长度。"><span class="toc-number">2.2.</span> <span class="toc-text">2.修改数组长度。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题："><span class="toc-number">3.</span> <span class="toc-text">问题：</span></a></li></ol>
         
     </div>
 </aside>
@@ -115,21 +115,21 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            父子通讯之单向数据流
+            数据绑定之无法检测的数据更改
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="http://yoursite.com/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/index.html">
+            <a class="article-date" href="http://yoursite.com/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/index.html">
     
     <i class="icon-calendar"></i>
     
-    <time datetime="2020-01-07T06:57:05.000Z" itemprop="datePublished">2020-01-07</time>
+    <time datetime="2020-01-07T08:55:45.000Z" itemprop="datePublished">2020-01-07</time>
 </a>
 
             
 <div class="article-tag-list">
     <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/react/" rel="tag">react</a>, <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
+    <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
 </div>
 
 
@@ -138,25 +138,27 @@
     
     <section class="article-body markdown-body">
         
-        <h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><p>单向数据流：如父组件通过props将数据传递给子组件<br>react<mark>父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值</mark></p>
-<p>原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式</p>
+        <p>Vue组件内是双向绑定，<mark>组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定）</mark>，但有两种情况下，更改组件内的数据不会自动刷新视图</p>
+<h3 id="一：Vue不能检测到对象属性的添加或删除"><a href="#一：Vue不能检测到对象属性的添加或删除" class="headerlink" title="一：Vue不能检测到对象属性的添加或删除"></a>一：Vue不能检测到对象属性的添加或删除</h3><p>错误写法：<code>this.$data.test.a=xxx</code></p>
+<p>正确写法：<code>vue.set(object,key,value)</code> 或 <code>Object.assign()</code></p>
 <a id="more"></a>
 
-<p><strong>react更改传入的props的解决方式</strong>：<br><mark>react中是直接将携带有父组件上下文对象的操作属性的函数传入到子组件中，然后绑定到事件上</mark></p>
-<p>示例：<br>父组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Children userName&#x3D;&#123;userName&#125; updateUser&#x3D;&#123;this.updateUser.bind(this)&#125; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>子组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;this.props.userName&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button onClick&#x3D;&#123;this.props.updateUser&#125;&gt;修改&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
-<p>注：子组件（如Children）将传入的props设置为自己的数据时，可以为Children添加ref=’children’，将父组件的某数据设置为this.refs.children.state.xxx即可（相当于是在子组件中通过父组件修改props）</p>
-<h3 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h3><p><strong>react更改传入的props的解决方式</strong>：<br><mark>vue中通过创建临时变量拷贝传入props，然后在事件中通过$emit(func,model)通知父组件刷新数据</mark></p>
-<p>示例：</p>
-<p>子组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-text&#x3D;&#39;userName&#39;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button @click&#x3D;&#39;updateUser()&#39;&gt;修改&lt;&#x2F;button&gt;</span><br><span class="line">updateUser()&#123;</span><br><span class="line">    this.$emit(&#39;update:userNmae&#39;,tmp_userName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>父组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Children :userName.sync&#x3D;&#39;userName&#39;&gt;</span><br></pre></td></tr></table></figure>
-<p><mark>双向绑定是元素绑定data，同时又能修改data</mark></p>
+<p>如：<br> <code>1. this.$set(this.test,’a’,xxx)</code> 或 <code>Vue.set(this.test,’a’,xxx)</code></p>
+<p> <code>2. this.test=Object.assign({},this.test,{a:xxx})</code></p>
+<h3 id="二：通过改动两种方式改动数组时，Vue检测不到变动："><a href="#二：通过改动两种方式改动数组时，Vue检测不到变动：" class="headerlink" title="二：通过改动两种方式改动数组时，Vue检测不到变动："></a>二：通过改动两种方式改动数组时，Vue检测不到变动：</h3><h4 id="1-利用索引直接设置一个项；"><a href="#1-利用索引直接设置一个项；" class="headerlink" title="1.利用索引直接设置一个项；"></a>1.利用索引直接设置一个项；</h4><h4 id="2-修改数组长度。"><a href="#2-修改数组长度。" class="headerlink" title="2.修改数组长度。"></a>2.修改数组长度。</h4><p>2.1 <mark>利用索引直接设置一个项，不能直接触发状态更新。</mark></p>
+<p>错误写法：<code>this.trees[idx]=’x’</code></p>
+<p>正确写法：<code>this.$set(this.trees,idx,’x’)</code> 或 <code>this.trees.splice(idx,1,’x’)</code></p>
+<p>2.2 <mark>改变数组长度</mark></p>
+<p> 错误写法：<code>this.trees.length=2;</code></p>
+<p> 正确写法：<code>this.trees.splice(2);</code></p>
+<p>总结：在一个组件实例中，只有在data里初始化的数据才是响应的，没有在data里声明的属性不是响应的。即<mark>vue监听data里面声明的数据，但不监听data中数据里的数据</mark>，基于此，直接将更改后的数组和对象直接赋值也可以</p>
+<p>原理：当你把一个普通的JavaScript对象传给Vue实例的data选项，Vue将遍历此对象所有的属性，并使用Object.defineProperty把这些属性全部转为getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是为什么 Vue 不支持 IE8 以及更低版本浏览器。</p>
+<p>这些getter/setter对用户来说是不可见的，但是在内部他们让vue追踪依赖，在属性被访问和修改时通知变化。每个组件实例都有相应的watcher实例对象，它会在组建渲染的过程中把属性记录为依赖，之后当依赖项的setter被调用时，会通知watcher重新计算，从而致使它关联的组件得以更新。</p>
+<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><p>能否用watch实现对象和数组内属性的直接修改导致视图自动刷新？</p>
+<p>对象和数组内属性的直接修改不能刷新视图，是因为vue内监听数据的层级是一级，不会监听data中声明的数据里的数据，因此在watch中依然不行，如果是直接对data中数据进行赋值或者使用特定api，则没有必要使用watch。</p>
+<p>watch应用场景：假如v-model 输入框绑定一个变量a   可以输入改变变量a  另一个文本绑定变量b ，他俩不是一个变量 但是b又随着a变化而变化，这样的话就用到watch了</p>
+<p>vue中组件间（父子，兄弟），为什么不是双向绑定?</p>
+<p>如果父子组件通讯是双向的话 则父变子变，子变父变，子父改变无穷尽也，可能会死循环。兄弟组件也一样</p>
 
         
     </section>
@@ -164,10 +166,8 @@
 
 
 
-<a id="pagenext" href="/2020/01/07/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" class="article-next" title="编程范式"><i class="icon-arrow-right"></i></a>
+<a id="pagenext" href="/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/" class="article-next" title="父子通讯之单向数据流"><i class="icon-arrow-right"></i></a>
 
-
-<a id="pageprev" href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/" class="article-prev" title="数据绑定之无法检测的数据更改"><i class="icon-arrow-left"></i></a>
 
 
 
@@ -181,11 +181,11 @@
         repo: "sanonz.github.io",
         owner: "sanonz",
         admin: ["sanonz"],
-        id: "2020/01/07/父子通讯之单向数据流",
+        id: "2020/01/07/数据绑定之无法检测的数据更改",
         distractionFreeMode: true,
-        title: "父子通讯之单向数据流",
-        body: "http://yoursite.com/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/",
-        labels: ["vue","react"]
+        title: "数据绑定之无法检测的数据更改",
+        body: "http://yoursite.com/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/",
+        labels: ["vue"]
     }).render('comments');
     </script>
 </div>

@@ -159,6 +159,50 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/">数据绑定之无法检测的数据更改</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-01-07T08:55:45.000Z" itemprop="datePublished">2020-01-07</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Vue组件内是双向绑定，<mark>组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定）</mark>，但有两种情况下，更改组件内的数据不会自动刷新视图</p>
+<h3 id="一：Vue不能检测到对象属性的添加或删除"><a href="#一：Vue不能检测到对象属性的添加或删除" class="headerlink" title="一：Vue不能检测到对象属性的添加或删除"></a>一：Vue不能检测到对象属性的添加或删除</h3><p>错误写法：<code>this.$data.test.a=xxx</code></p>
+<p>正确写法：<code>vue.set(object,key,value)</code> 或 <code>Object.assign()</code></p>
+        
+        <p class="article-more-link">
+            <a href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/#more">
+                <span class="vm">阅读更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/">父子通讯之单向数据流</a>
         </h1>
         
@@ -182,7 +226,8 @@
     
     <section class="article-body markdown-body">
         
-        <h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><p>单向数据流：如父组件通过props将数据传递给子组件</p>
+        <h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><p>单向数据流：如父组件通过props将数据传递给子组件<br>react<mark>父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值</mark></p>
+<p>原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式</p>
         
         <p class="article-more-link">
             <a href="/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/#more">
@@ -225,6 +270,8 @@
     <section class="article-body markdown-body">
         
         <p>编程范式主要有三种：命令式编程，声明式编程和函数式编程。</p>
+<h3 id="命令式编程"><a href="#命令式编程" class="headerlink" title="命令式编程"></a>命令式编程</h3><p>关注计算机执行的步骤，即<mark>一步一步告诉计算机先做什么再做什么</mark>。<br>示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;int&gt; results &#x3D; new List&lt;int&gt;();</span><br><span class="line">foreach(var num in collection)</span><br><span class="line">&#123;</span><br><span class="line">    if (num &gt; 5)</span><br><span class="line">        results.Add(num);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
         <p class="article-more-link">
             <a href="/2020/01/07/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/#more">
