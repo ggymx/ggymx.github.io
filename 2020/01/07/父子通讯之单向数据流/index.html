@@ -7,10 +7,10 @@
 
     
 
-    <title>编程范式 | 放杨的猩猩~*</title>
+    <title>父子通讯之单向数据流 | 放杨的猩猩~*</title>
     <meta name="author" content="ggymx" />
     <meta name="keywords" content="" />
-    <meta name="description" content="编程范式主要有三种：命令式编程，声明式编程和函数式编程。命令式编程关注计算机执行的步骤，即一步一步告诉计算机先做什么再做什么。示例代码：123456List&amp;lt;int&amp;gt; results &amp;#x3D; new List&amp;lt;int&amp;gt;();foreach(var num in collection)&amp;#123;    if (num &amp;gt; 5)        results.Add(num);&amp;#125;声明式编程以数据结构的形式来表达程序执行的逻辑。它的主要..." />
+    <meta name="description" content="react单向数据流：如父组件通过props将数据传递给子组件react父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式react更改传入的pro..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -101,7 +101,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令式编程"><span class="toc-number">1.</span> <span class="toc-text">命令式编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#声明式编程"><span class="toc-number">2.</span> <span class="toc-text">声明式编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式编程"><span class="toc-number">3.</span> <span class="toc-text">函数式编程</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#react"><span class="toc-number">1.</span> <span class="toc-text">react</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue"><span class="toc-number">2.</span> <span class="toc-text">vue</span></a></li></ol>
         
     </div>
 </aside>
@@ -115,21 +115,21 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            编程范式
+            父子通讯之单向数据流
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="http://yoursite.com/2020/01/07/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/index.html">
+            <a class="article-date" href="http://yoursite.com/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/index.html">
     
     <i class="icon-calendar"></i>
     
-    <time datetime="2020-01-07T02:31:43.000Z" itemprop="datePublished">2020-01-07</time>
+    <time datetime="2020-01-07T06:57:05.000Z" itemprop="datePublished">2020-01-07</time>
 </a>
 
             
 <div class="article-tag-list">
     <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/" rel="tag">编程规范</a>
+    <a class="article-tag-link" href="/tags/react/" rel="tag">react</a>, <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
 </div>
 
 
@@ -138,21 +138,26 @@
     
     <section class="article-body markdown-body">
         
-        <p>编程范式主要有三种：命令式编程，声明式编程和函数式编程。</p>
+        <h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><p>单向数据流：如父组件通过props将数据传递给子组件</p>
 <a id="more"></a>
 
-<h3 id="命令式编程"><a href="#命令式编程" class="headerlink" title="命令式编程"></a>命令式编程</h3><p>关注计算机执行的步骤，即<mark>一步一步告诉计算机先做什么再做什么</mark>。<br>示例代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;int&gt; results &#x3D; new List&lt;int&gt;();</span><br><span class="line">foreach(var num in collection)</span><br><span class="line">&#123;</span><br><span class="line">    if (num &gt; 5)</span><br><span class="line">        results.Add(num);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>react<mark>父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值</mark></p>
+<p>原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式</p>
+<p><strong>react更改传入的props的解决方式</strong>：<br><mark>react中是直接将携带有父组件上下文对象的操作属性的函数传入到子组件中，然后绑定到事件上</mark></p>
+<p>示例：<br>父组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Children userName&#x3D;&#123;userName&#125; updateUser&#x3D;&#123;this.updateUser.bind(this)&#125; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="声明式编程"><a href="#声明式编程" class="headerlink" title="声明式编程"></a>声明式编程</h3><p><mark>以数据结构的形式来表达程序执行的逻辑</mark>。它的主要思想是<mark>告诉计算机应该做什么</mark>，但不指定具体要怎么做。</p>
-<p>SQL 语句就是最明显的一种声明式编程的例子，例如：<br><code>SELECT * FROM collection WHERE num &gt; 5</code></p>
-<p>除了 SQL，网页编程中用到的 <strong>HTML</strong> 和 <strong>CSS</strong> 也都属于声明式编程。<br>通过观察声明式编程的代码我们可以发现它有一个特点是它<mark>不需要创建变量用来存储数据。</mark></p>
-<p>另一个特点是它<mark>不包含循环控制的代码</mark>如 for， while。</p>
-<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p>和声明式编程是有所关联的，因为他们思想是一致的：即只关注做什么而不是怎么做。但函数式编程不仅仅局限于声明式编程。函数式编程最重要的特点是<mark>“函数第一位”，即函数可以出现在任何地方</mark>，比如你可以把函数作为参数传递给另一个函数，不仅如此你还可以将函数作为返回值。</p>
-<p>大部分常见的编程语言一半都已经提供了对这种编程方式的支持，比如 JavaScript，再有 C# 中的 LINQ 和 Java 中的 Lambda 和闭包的概念。</p>
+<p>子组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;this.props.userName&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button onClick&#x3D;&#123;this.props.updateUser&#125;&gt;修改&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+<p>注：子组件（如Children）将传入的props设置为自己的数据时，可以为Children添加ref=’children’，将父组件的某数据设置为this.refs.children.state.xxx即可（相当于是在子组件中通过父组件修改props）</p>
+<h3 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h3><p><strong>react更改传入的props的解决方式</strong>：<br><mark>vue中通过创建临时变量拷贝传入props，然后在事件中通过$emit(func,model)通知父组件刷新数据</mark></p>
 <p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Number&gt; results &#x3D; collection.stream().filter(n -&gt; n &gt; 5)</span><br><span class="line">.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-<p>相比于以前的命令式编程，函数式编程，它可以让代码的逻辑<strong>更清晰更优雅</strong></p>
+<p>子组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-text&#x3D;&#39;userName&#39;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button @click&#x3D;&#39;updateUser()&#39;&gt;修改&lt;&#x2F;button&gt;</span><br><span class="line">updateUser()&#123;</span><br><span class="line">    this.$emit(&#39;update:userNmae&#39;,tmp_userName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>父组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Children :userName.sync&#x3D;&#39;userName&#39;&gt;</span><br></pre></td></tr></table></figure>
+<p><mark>双向绑定是元素绑定data，同时又能修改data</mark></p>
 
         
     </section>
@@ -160,10 +165,8 @@
 
 
 
-<a id="pagenext" href="/2020/01/07/hello-world/" class="article-next" title="Hello World"><i class="icon-arrow-right"></i></a>
+<a id="pagenext" href="/2020/01/07/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" class="article-next" title="编程范式"><i class="icon-arrow-right"></i></a>
 
-
-<a id="pageprev" href="/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/" class="article-prev" title="父子通讯之单向数据流"><i class="icon-arrow-left"></i></a>
 
 
 
@@ -177,11 +180,11 @@
         repo: "sanonz.github.io",
         owner: "sanonz",
         admin: ["sanonz"],
-        id: "2020/01/07/编程范式",
+        id: "2020/01/07/父子通讯之单向数据流",
         distractionFreeMode: true,
-        title: "编程范式",
-        body: "http://yoursite.com/2020/01/07/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/",
-        labels: ["编程规范"]
+        title: "父子通讯之单向数据流",
+        body: "http://yoursite.com/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/",
+        labels: ["vue","react"]
     }).render('comments');
     </script>
 </div>
