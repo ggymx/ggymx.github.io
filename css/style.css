@@ -1913,6 +1913,9 @@ body,
 .app {
   height: 100%;
 }
+body {
+  height: auto;
+}
 .header {
   position: fixed;
   top: 0;
