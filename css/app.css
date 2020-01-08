@@ -5,6 +5,7 @@ body,
 }
 body {
   height: auto;
+  min-height: 100%;
 }
 .header {
   position: fixed;
