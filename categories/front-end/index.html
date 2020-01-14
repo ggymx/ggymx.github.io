@@ -159,6 +159,48 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2020/01/14/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E6%9C%BA%E5%88%B6/">父子通讯机制</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/categories/front-end/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-01-14T10:52:28.000Z" itemprop="datePublished">2020-01-14</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h4 id="1-父传子"><a href="#1-父传子" class="headerlink" title="1.父传子"></a>1.父传子</h4><p>子组件：<code>props:[&#39;message&#39;]</code><br>父组件 <code>&lt;child message=’传递的值’&gt;&lt;/child&gt;</code></p>
+        
+        <p class="article-more-link">
+            <a href="/2020/01/14/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E6%9C%BA%E5%88%B6/#more">
+                <span class="vm">阅读更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/">数据绑定之无法检测的数据更改</a>
         </h1>
         
@@ -188,49 +230,6 @@
         
         <p class="article-more-link">
             <a href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/#more">
-                <span class="vm">阅读更多</span>
-                <i class="icon-arrow-double-right vm"></i>    
-            </a>
-        </p>
-        
-        
-    </section>
-</article>
-
-
-    <article class="article" itemscope itemprop="blogPost">
-    
-    <header class="article-header">
-        
-        <h1 itemprop="name">
-            <a href="/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/">父子通讯之单向数据流</a>
-        </h1>
-        
-        <div class="article-meta clearfix">
-            <a class="article-date" href="http://yoursite.com/categories/front-end/index.html">
-    
-    <i class="icon-calendar"></i>
-    
-    <time datetime="2020-01-07T06:57:05.000Z" itemprop="datePublished">2020-01-07</time>
-</a>
-
-            
-<div class="article-tag-list">
-    <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/react/" rel="tag">react</a>, <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
-</div>
-
-
-        </div>
-    </header>
-    
-    <section class="article-body markdown-body">
-        
-        <h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><p>单向数据流：如父组件通过props将数据传递给子组件<br>react<mark>父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值</mark></p>
-<p>原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式</p>
-        
-        <p class="article-more-link">
-            <a href="/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/#more">
                 <span class="vm">阅读更多</span>
                 <i class="icon-arrow-double-right vm"></i>    
             </a>

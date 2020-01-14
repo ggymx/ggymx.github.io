@@ -7,10 +7,10 @@
 
     
 
-    <title>父子通讯之单向数据流 | 放杨的猩猩~*</title>
+    <title>父子通讯机制 | 放杨的猩猩~*</title>
     <meta name="author" content="ggymx" />
     <meta name="keywords" content="" />
-    <meta name="description" content="react单向数据流：如父组件通过props将数据传递给子组件react父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式react更改传入的prop..." />
+    <meta name="description" content="1.父传子子组件：props:[&amp;#39;message&amp;#39;]父组件 &amp;lt;child message=’传递的值’&amp;gt;&amp;lt;/child&amp;gt;2.子传父2.1 只需要更新父组件中的值子组件：ColumnFilter.vue123456setCheckMz(checkMz) &amp;#123;let mzTreeTmp &amp;#x3D; this.tbData;...&amp;#x2F;&amp;#x2F;将子组件的值传给父组件this.$emit(&amp;#39;updateTree&amp;#39;..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -101,7 +101,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#react"><span class="toc-number">1.</span> <span class="toc-text">react</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue"><span class="toc-number">2.</span> <span class="toc-text">vue</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-父传子"><span class="toc-number">1.</span> <span class="toc-text">1.父传子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-子传父"><span class="toc-number">2.</span> <span class="toc-text">2.子传父</span></a></li></ol>
         
     </div>
 </aside>
@@ -115,21 +115,21 @@
     <header class="article-header">
         
         <h1 itemprop="name">
-            父子通讯之单向数据流
+            父子通讯机制
         </h1>
         
         <div class="article-meta clearfix">
-            <a class="article-date" href="http://yoursite.com/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/index.html">
+            <a class="article-date" href="http://yoursite.com/2020/01/14/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E6%9C%BA%E5%88%B6/index.html">
     
     <i class="icon-calendar"></i>
     
-    <time datetime="2020-01-07T06:57:05.000Z" itemprop="datePublished">2020-01-07</time>
+    <time datetime="2020-01-14T10:52:28.000Z" itemprop="datePublished">2020-01-14</time>
 </a>
 
             
 <div class="article-tag-list">
     <i class="icon-tag"></i>
-    <a class="article-tag-link" href="/tags/react/" rel="tag">react</a>, <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
+    <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
 </div>
 
 
@@ -138,25 +138,18 @@
     
     <section class="article-body markdown-body">
         
-        <h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><p>单向数据流：如父组件通过props将数据传递给子组件<br>react<mark>父组件传值给子组件都是单向数据流，且子组件中无法直接修改传入的属性值</mark></p>
-<p>原因：子组件传入的props值，当父组件改变此值时，子组件的props也会改变，说明子组件的该属性是引用和指向父组件的传入变量，而不是简单的拷贝。子组件在父组件内，则无权让父组件重新渲染DOM，但如果直接允许更改传入的props会让父组件重新渲染而子组件也会重新渲染，会导致逻辑错误；因此父组件到子组件是单向数据流模式</p>
+        <h4 id="1-父传子"><a href="#1-父传子" class="headerlink" title="1.父传子"></a>1.父传子</h4><p>子组件：<code>props:[&#39;message&#39;]</code><br>父组件 <code>&lt;child message=’传递的值’&gt;&lt;/child&gt;</code></p>
 <a id="more"></a>
 
-<p><strong>react更改传入的props的解决方式</strong>：<br><mark>react中是直接将携带有父组件上下文对象的操作属性的函数传入到子组件中，然后绑定到事件上</mark></p>
-<p>示例：<br>父组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Children userName&#x3D;&#123;userName&#125; updateUser&#x3D;&#123;this.updateUser.bind(this)&#125; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>子组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;this.props.userName&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button onClick&#x3D;&#123;this.props.updateUser&#125;&gt;修改&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
-<p>注：子组件（如Children）将传入的props设置为自己的数据时，可以为Children添加ref=’children’，将父组件的某数据设置为this.refs.children.state.xxx即可（相当于是在子组件中通过父组件修改props）</p>
-<h3 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h3><p><strong>react更改传入的props的解决方式</strong>：<br><mark>vue中通过创建临时变量拷贝传入props，然后在事件中通过$emit(func,model)通知父组件刷新数据</mark></p>
-<p>示例：</p>
-<p>子组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-text&#x3D;&#39;userName&#39;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;button @click&#x3D;&#39;updateUser()&#39;&gt;修改&lt;&#x2F;button&gt;</span><br><span class="line">updateUser()&#123;</span><br><span class="line">    this.$emit(&#39;update:userNmae&#39;,tmp_userName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>父组件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Children :userName.sync&#x3D;&#39;userName&#39;&gt;</span><br></pre></td></tr></table></figure>
-<p><mark>双向绑定是元素绑定data，同时又能修改data</mark></p>
+<h4 id="2-子传父"><a href="#2-子传父" class="headerlink" title="2.子传父"></a>2.子传父</h4><ul>
+<li>2.1 只需要更新父组件中的值<pre><code>子组件：ColumnFilter.vue
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">setCheckMz(checkMz) &#123;</span><br><span class="line">let mzTreeTmp &#x3D; this.tbData;</span><br><span class="line">...</span><br><span class="line">&#x2F;&#x2F;将子组件的值传给父组件</span><br><span class="line">this.$emit(&#39;updateTree&#39;,mzTreeTmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+父组件：
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;v-columnFilter</span><br><span class="line">        :tb-data&#x3D;&quot;cpTree&quot;</span><br><span class="line">        @updateTree&#x3D;&quot;updateCpTree&quot;</span><br><span class="line">        ...</span><br><span class="line">        v-if&#x3D;&quot;isFilterShow&quot;</span><br><span class="line">&gt;&lt;&#x2F;v-columnFilter&gt;</span><br><span class="line">--------------------------------------------------------------</span><br><span class="line">updateCpTree(data)&#123;</span><br><span class="line">    this.cpTreeTmp &#x3D; data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre></li>
+<li>2.2父组件和子组件中的值都要更新（<strong>如父传入子的props值，且当props改变时，父子组件都要更新</strong>）<br>  子组件：ColumnFilter.vue  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">    &#x2F;&#x2F;临时变量：将父组件传过来的变量保存</span><br><span class="line">    created() &#123;</span><br><span class="line">    this.tmp_checkMz&#x3D;this.checkMz;</span><br><span class="line">    console.log(&#39;this.tmp_checkMz---&#39;,this.tmp_checkMz);</span><br><span class="line">&#125;,</span><br><span class="line">&#x2F;&#x2F;监听临时变量，更改后通知父组件更新</span><br><span class="line">    watch:&#123;</span><br><span class="line">    tmp_checkMz(val,oldVal)&#123;</span><br><span class="line">        console.log(&#39;监听事件------&#39;);</span><br><span class="line">        this.$emit(&#39;update:check-mz&#39;,val);</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#x2F;&#x2F;触发临时变量更改</span><br><span class="line">setCheckMz(checkMz) &#123;</span><br><span class="line">  ...</span><br><span class="line">  this.tmp_checkMz&#x3D;this.checkMz;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  父组件：CpManange.vue  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;v-columnFilter</span><br><span class="line">    ...</span><br><span class="line">    :check-mz.sync&#x3D;&quot;checkMz&quot;</span><br><span class="line">    v-if&#x3D;&quot;isFilterShow&quot;</span><br><span class="line">&gt;&lt;&#x2F;v-columnFilter&gt;</span><br></pre></td></tr></table></figure>
+  注：<mark>子组件中不能直接修改父组件传入的属性值，即子组件的props</mark>，要通过临时变量保存props，通过修改临时变量来触发props的更新</li>
+</ul>
 
         
     </section>
@@ -164,10 +157,8 @@
 
 
 
-<a id="pagenext" href="/2020/01/07/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" class="article-next" title="编程范式"><i class="icon-arrow-right"></i></a>
+<a id="pagenext" href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/" class="article-next" title="数据绑定之无法检测的数据更改"><i class="icon-arrow-right"></i></a>
 
-
-<a id="pageprev" href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/" class="article-prev" title="数据绑定之无法检测的数据更改"><i class="icon-arrow-left"></i></a>
 
 
 
@@ -181,11 +172,11 @@
         repo: "sanonz.github.io",
         owner: "sanonz",
         admin: ["sanonz"],
-        id: "2020/01/07/父子通讯之单向数据流",
+        id: "2020/01/14/父子通讯机制",
         distractionFreeMode: true,
-        title: "父子通讯之单向数据流",
-        body: "http://yoursite.com/2020/01/07/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E4%B9%8B%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81/",
-        labels: ["vue","react"]
+        title: "父子通讯机制",
+        body: "http://yoursite.com/2020/01/14/%E7%88%B6%E5%AD%90%E9%80%9A%E8%AE%AF%E6%9C%BA%E5%88%B6/",
+        labels: ["vue"]
     }).render('comments');
     </script>
 </div>
