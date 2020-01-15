@@ -10,7 +10,7 @@
     <title>编程范式 | 放杨的猩猩~*</title>
     <meta name="author" content="ggymx" />
     <meta name="keywords" content="" />
-    <meta name="description" content="编程范式主要有三种：命令式编程，声明式编程和函数式编程。命令式编程关注计算机执行的步骤，即一步一步告诉计算机先做什么再做什么。示例代码：123456List&amp;lt;int&amp;gt; results &amp;#x3D; new List&amp;lt;int&amp;gt;();foreach(var num in collection)&amp;#123;    if (num &amp;gt; 5)        results.Add(num);&amp;#125;声明式编程以数据结构的形式来表达程序执行的逻辑。它的主要..." />
+    <meta name="description" content="编程范式主要有三种：命令式编程，声明式编程和函数式编程。命令式编程关注计算机执行的步骤，即一步一步告诉计算机先做什么再做什么。示例代码：123456List&amp;lt;int&amp;gt; results = new List&amp;lt;int&amp;gt;();foreach(var num in collection)&amp;#123;    if (num &amp;gt; 5)        results.Add(num);&amp;#125;声明式编程以数据结构的形式来表达程序执行的逻辑。它的主要思想是告诉..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -140,18 +140,20 @@
         
         <p>编程范式主要有三种：命令式编程，声明式编程和函数式编程。</p>
 <h3 id="命令式编程"><a href="#命令式编程" class="headerlink" title="命令式编程"></a>命令式编程</h3><p>关注计算机执行的步骤，即<mark>一步一步告诉计算机先做什么再做什么</mark>。<br>示例代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;int&gt; results &#x3D; new List&lt;int&gt;();</span><br><span class="line">foreach(var num in collection)</span><br><span class="line">&#123;</span><br><span class="line">    if (num &gt; 5)</span><br><span class="line">        results.Add(num);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;<span class="keyword">int</span>&gt; results = <span class="keyword">new</span> List&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">foreach(<span class="keyword">var</span> num in collection)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (num &gt; <span class="number">5</span>)</span><br><span class="line">        results.Add(num);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
 <h3 id="声明式编程"><a href="#声明式编程" class="headerlink" title="声明式编程"></a>声明式编程</h3><p><mark>以数据结构的形式来表达程序执行的逻辑</mark>。它的主要思想是<mark>告诉计算机应该做什么</mark>，但不指定具体要怎么做。</p>
-<p>SQL 语句就是最明显的一种声明式编程的例子，例如：<br><code>SELECT * FROM collection WHERE num &gt; 5</code></p>
+<p>SQL 语句就是最明显的一种声明式编程的例子，例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> collection <span class="keyword">WHERE</span> <span class="keyword">num</span> &gt; <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
 <p>除了 SQL，网页编程中用到的 <strong>HTML</strong> 和 <strong>CSS</strong> 也都属于声明式编程。<br>通过观察声明式编程的代码我们可以发现它有一个特点是它<mark>不需要创建变量用来存储数据。</mark></p>
 <p>另一个特点是它<mark>不包含循环控制的代码</mark>如 for， while。</p>
 <h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p>和声明式编程是有所关联的，因为他们思想是一致的：即只关注做什么而不是怎么做。但函数式编程不仅仅局限于声明式编程。函数式编程最重要的特点是<mark>“函数第一位”，即函数可以出现在任何地方</mark>，比如你可以把函数作为参数传递给另一个函数，不仅如此你还可以将函数作为返回值。</p>
 <p>大部分常见的编程语言一半都已经提供了对这种编程方式的支持，比如 JavaScript，再有 C# 中的 LINQ 和 Java 中的 Lambda 和闭包的概念。</p>
 <p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Number&gt; results &#x3D; collection.stream().filter(n -&gt; n &gt; 5)</span><br><span class="line">.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Number&gt; results = collection.stream().filter(n -&gt; n &gt; <span class="number">5</span>)</span><br><span class="line">.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
 <p>相比于以前的命令式编程，函数式编程，它可以让代码的逻辑<strong>更清晰更优雅</strong></p>
 
         
