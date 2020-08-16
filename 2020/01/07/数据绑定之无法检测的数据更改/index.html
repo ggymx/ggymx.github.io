@@ -10,7 +10,7 @@
     <title>数据绑定之无法检测的数据更改 | 刚刚有梦想</title>
     <meta name="author" content="ggymx" />
     <meta name="keywords" content="" />
-    <meta name="description" content="Vue组件内是双向绑定，组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定），但有两种情况下，更改组件内的数据不会自动刷新视图一：Vue不能检测到对象属性的添加或删除错误写法：this.$data.test.a=xxx正确写法：vue.set(object,key,value) 或 Object.assign()如： 1. this.$set(this.test,’a’,xxx) 或 Vue.set(this.test,’a’,xxx) 2. this.t..." />
+    <meta name="description" content="Vue组件内是双向绑定，组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定），但有三种情况下，更改组件内的数据不会自动刷新视图1：Vue不能检测到已有对象属性的添加或删除错误写法：this.$data.test.a=xxx正确写法：vue.set(object,key,value) 或 Object.assign()示例：12345678910111213141516171819202122232425262728&amp;lt;script&amp;gt;  export ..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -105,7 +105,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一：Vue不能检测到对象属性的添加或删除"><span class="toc-number">1.</span> <span class="toc-text">一：Vue不能检测到对象属性的添加或删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二：通过改动两种方式改动数组时，Vue检测不到变动："><span class="toc-number">2.</span> <span class="toc-text">二：通过改动两种方式改动数组时，Vue检测不到变动：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-利用索引直接设置一个项；"><span class="toc-number">2.1.</span> <span class="toc-text">1.利用索引直接设置一个项；</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-修改数组长度。"><span class="toc-number">2.2.</span> <span class="toc-text">2.修改数组长度。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题："><span class="toc-number">3.</span> <span class="toc-text">问题：</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1：Vue不能检测到已有对象属性的添加或删除"><span class="toc-number">1.</span> <span class="toc-text">1：Vue不能检测到已有对象属性的添加或删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2：通过改动两种方式改动数组时，Vue检测不到变动"><span class="toc-number">2.</span> <span class="toc-text">2：通过改动两种方式改动数组时，Vue检测不到变动</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-利用索引直接设置一个项"><span class="toc-number">2.1.</span> <span class="toc-text">1.利用索引直接设置一个项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-修改数组长度"><span class="toc-number">2.2.</span> <span class="toc-text">2.修改数组长度</span></a></li></ol></li></ol>
         
     </div>
 </aside>
@@ -142,23 +142,37 @@
     
     <section class="article-body markdown-body">
         
-        <p>Vue组件内是双向绑定，<mark>组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定）</mark>，但有两种情况下，更改组件内的数据不会自动刷新视图</p>
-<h3 id="一：Vue不能检测到对象属性的添加或删除"><a href="#一：Vue不能检测到对象属性的添加或删除" class="headerlink" title="一：Vue不能检测到对象属性的添加或删除"></a>一：Vue不能检测到对象属性的添加或删除</h3><p>错误写法：<code>this.$data.test.a=xxx</code></p>
+        <p>Vue组件内是双向绑定，<mark>组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定）</mark>，但有三种情况下，更改组件内的数据不会自动刷新视图</p>
+<h4 id="1：Vue不能检测到已有对象属性的添加或删除"><a href="#1：Vue不能检测到已有对象属性的添加或删除" class="headerlink" title="1：Vue不能检测到已有对象属性的添加或删除"></a>1：Vue不能检测到已有对象属性的添加或删除</h4><p>错误写法：<code>this.$data.test.a=xxx</code></p>
 <p>正确写法：<code>vue.set(object,key,value)</code> 或 <code>Object.assign()</code></p>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">    name:<span class="string">'Item'</span>,</span><br><span class="line">    data()&#123;</span><br><span class="line">      <span class="keyword">return</span>&#123;</span><br><span class="line">        pagition:&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    create()&#123;</span><br><span class="line">      <span class="keyword">this</span>.getList()</span><br><span class="line">    &#125;</span><br><span class="line">    getList()&#123;</span><br><span class="line">         <span class="comment">//request请求</span></span><br><span class="line">        getCurrentList(data).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">          <span class="comment">//可以赋值，但不会引起视图刷新</span></span><br><span class="line">          <span class="keyword">this</span>.pagition.size=res.size</span><br><span class="line">          <span class="keyword">this</span>.pagtion.current=res.current</span><br><span class="line">          <span class="comment">//正确写法</span></span><br><span class="line">          <span class="keyword">this</span>.$<span class="keyword">set</span>(this.pagition,'size',res.size)</span><br><span class="line">          this.$<span class="keyword">set</span>(this.pagition,'current',res.current)</span><br><span class="line">          //也可以直接复制</span><br><span class="line">          this.pagition=Object.assign(&#123;&#125;,&#123;<span class="attr">size</span>:res.size,<span class="attr">current</span>:res.current&#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 
 <p>如：<br> <code>1. this.$set(this.test,’a’,xxx)</code> 或 <code>Vue.set(this.test,’a’,xxx)</code></p>
 <p> <code>2. this.test=Object.assign({},this.test,{a:xxx})</code></p>
-<h3 id="二：通过改动两种方式改动数组时，Vue检测不到变动："><a href="#二：通过改动两种方式改动数组时，Vue检测不到变动：" class="headerlink" title="二：通过改动两种方式改动数组时，Vue检测不到变动："></a>二：通过改动两种方式改动数组时，Vue检测不到变动：</h3><h4 id="1-利用索引直接设置一个项；"><a href="#1-利用索引直接设置一个项；" class="headerlink" title="1.利用索引直接设置一个项；"></a>1.利用索引直接设置一个项；</h4><h4 id="2-修改数组长度。"><a href="#2-修改数组长度。" class="headerlink" title="2.修改数组长度。"></a>2.修改数组长度。</h4><p>2.1 <mark>利用索引直接设置一个项，不能直接触发状态更新。</mark></p>
+<h4 id="2：通过改动两种方式改动数组时，Vue检测不到变动"><a href="#2：通过改动两种方式改动数组时，Vue检测不到变动" class="headerlink" title="2：通过改动两种方式改动数组时，Vue检测不到变动"></a>2：通过改动两种方式改动数组时，Vue检测不到变动</h4><h5 id="1-利用索引直接设置一个项"><a href="#1-利用索引直接设置一个项" class="headerlink" title="1.利用索引直接设置一个项"></a>1.利用索引直接设置一个项</h5><h5 id="2-修改数组长度"><a href="#2-修改数组长度" class="headerlink" title="2.修改数组长度"></a>2.修改数组长度</h5><p>2.1 <mark>利用索引直接设置一个项，不能直接触发状态更新。</mark></p>
 <p>错误写法：<code>this.trees[idx]=’x’</code></p>
 <p>正确写法：<code>this.$set(this.trees,idx,’x’)</code> 或 <code>this.trees.splice(idx,1,’x’)</code></p>
 <p>2.2 <mark>改变数组长度</mark></p>
 <p> 错误写法：<code>this.trees.length=2;</code></p>
 <p> 正确写法：<code>this.trees.splice(2);</code></p>
-<p>总结：在一个组件实例中，只有在data里初始化的数据才是响应的，没有在data里声明的属性不是响应的。即<mark>vue监听data里面声明的数据，但不监听data中数据里的数据</mark>，基于此，直接将更改后的数组和对象直接赋值也可以</p>
-<p>原理：当你把一个普通的JavaScript对象传给Vue实例的data选项，Vue将遍历此对象所有的属性，并使用Object.defineProperty把这些属性全部转为getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是为什么 Vue 不支持 IE8 以及更低版本浏览器。</p>
+<p>总结：</p>
+<ul>
+<li><p><mark>1.只有在组件data中已经定义的对象的属性直接赋值才可以引起视图刷新，对于对象的新增属性，需要使用<code>$set</code>赋值或者对data中已存在对象进行整体赋值才能刷新视图</mark></p>
+</li>
+<li><p>2.<mark>对象新增属性时直接赋值时，watch无法监听。watch可以监听$set引起的变动</mark>，因为watch内部监听的是数据的setter，已存在的属性在data初始化时已经绑定了getter/setter</p>
+</li>
+<li><p>3.对于能够已经在data中声明过的属性，可以直接进行赋值。虽然此时使用<code>$set</code>也可以。但是此时<code>$set</code>没有直接赋值性能好（因为已存在属性赋值只会调用内部setter，而<code>$set</code>会先对值进行setter绑定，然后在调用settter，多走了一步）</p>
+</li>
+</ul>
+<p>原理：当你把一个普通的JavaScript对象传给Vue实例的data选项，<marK>Vue将遍历此对象所有的属性，并使用Object.defineProperty把这些属性全部转为getter/setter。</marK>Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是为什么 Vue 不支持 IE8 以及更低版本浏览器。</p>
 <p>这些getter/setter对用户来说是不可见的，但是在内部他们让vue追踪依赖，在属性被访问和修改时通知变化。每个组件实例都有相应的watcher实例对象，它会在组建渲染的过程中把属性记录为依赖，之后当依赖项的setter被调用时，会通知watcher重新计算，从而致使它关联的组件得以更新。</p>
-<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><p>能否用watch实现对象和数组内属性的直接修改导致视图自动刷新？</p>
+<p>属性的删除用$delete，用js的<code>delete</code>关键字不会引起视图刷新，因为<br>$delete不会调用数据的setter</p>
+<hr>
+<p>拓展：<br>可以直接引起视图刷新的赋值的js的API（对data中已存在的属性而言）<br>push：数据尾插入<br>pop：尾删除<br>unshift：头插入<br>shift：头删除<br>splice：插入并删除<br>…<br>这些js的api会操作调用它的对象，会直接修改原数据，vue默认对它们进行了特殊处理。调用这些api会在内部调用数据的setter，从而引发视图刷新</p>
+<p>settter的工作流程<br><img src="http://tva1.sinaimg.cn/large/007gxmUjgy1ghsfactmnaj30jz0azab6.jpg" alt="image.png"></p>
+<p>能否用watch实现对象和数组内属性的直接修改导致视图自动刷新？</p>
 <p>对象和数组内属性的直接修改不能刷新视图，是因为vue内监听数据的层级是一级，不会监听data中声明的数据里的数据，因此在watch中依然不行，如果是直接对data中数据进行赋值或者使用特定api，则没有必要使用watch。</p>
 <p>watch应用场景：假如v-model 输入框绑定一个变量a   可以输入改变变量a  另一个文本绑定变量b ，他俩不是一个变量 但是b又随着a变化而变化，这样的话就用到watch了</p>
 <p>vue中组件间（父子，兄弟），为什么不是双向绑定?</p>
