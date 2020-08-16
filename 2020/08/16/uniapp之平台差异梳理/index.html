@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>uniapp之平台差异梳理 | 刚刚有梦想</title>
+    <meta name="author" content="ggymx" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="uniapp：一款优秀的跨平台开发框架创建项目方式HubilderX创建，编译器在HubilderX中cli创建，编译器在项目中ps:两种编译器都有的话，默认使用项目中的编译器插件安装方式NPM安装（兼容性不好，往往只支持h5端，npm方式不支持小程序自定义组件）插件市场安装（兼容性好）开发规范为了实现多端兼容，综合考虑编译速度、运行性能等因素，uni-app 约定了如下开发规范：页面文件遵循 Vue 单文件组件 (SFC) 规范组件标签靠近小程序规范，详见uni..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    <link rel="alternate" href="/atom.xml" title="刚刚有梦想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/images/avatar.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">刚刚有梦想</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/other">
+                <span class="nav-text">其他</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/atom.xml">
+                <span class="nav-text">订阅</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建项目方式"><span class="toc-number">1.</span> <span class="toc-text">创建项目方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插件安装方式"><span class="toc-number">2.</span> <span class="toc-text">插件安装方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开发规范"><span class="toc-number">3.</span> <span class="toc-text">开发规范</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行环境判断"><span class="toc-number">4.</span> <span class="toc-text">运行环境判断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行平台判断"><span class="toc-number">5.</span> <span class="toc-text">运行平台判断</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#尺寸单位支持"><span class="toc-number"></span> <span class="toc-text">尺寸单位支持</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#uniapp渲染方式"><span class="toc-number">1.</span> <span class="toc-text">uniapp渲染方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#uniapp编译模式"><span class="toc-number">2.</span> <span class="toc-text">uniapp编译模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#uniapp的自定义组件处理方式"><span class="toc-number">3.</span> <span class="toc-text">uniapp的自定义组件处理方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES6支持"><span class="toc-number">4.</span> <span class="toc-text">ES6支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">5.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#模板语法"><span class="toc-number">5.1.</span> <span class="toc-text">模板语法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#页面跳转"><span class="toc-number">5.2.</span> <span class="toc-text">页面跳转</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全局状态管理"><span class="toc-number">5.3.</span> <span class="toc-text">全局状态管理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#vue特性支持"><span class="toc-number">5.4.</span> <span class="toc-text">vue特性支持</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#视图层的脚本语言支持"><span class="toc-number">5.5.</span> <span class="toc-text">视图层的脚本语言支持</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UI组件"><span class="toc-number">5.6.</span> <span class="toc-text">UI组件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#easycom"><span class="toc-number">5.7.</span> <span class="toc-text">easycom</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            uniapp之平台差异梳理
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/2020/08/16/uniapp%E4%B9%8B%E5%B9%B3%E5%8F%B0%E5%B7%AE%E5%BC%82%E6%A2%B3%E7%90%86/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-08-16T10:25:43.000Z" itemprop="datePublished">2020-08-16</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/uniapp/" rel="tag">uniapp</a>, <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>uniapp：一款优秀的跨平台开发框架</p>
+<a id="more"></a>
+
+<h4 id="创建项目方式"><a href="#创建项目方式" class="headerlink" title="创建项目方式"></a>创建项目方式</h4><ul>
+<li>HubilderX创建，编译器在HubilderX中</li>
+<li>cli创建，编译器在项目中<br>ps:两种编译器都有的话，默认使用项目中的编译器</li>
+</ul>
+<h4 id="插件安装方式"><a href="#插件安装方式" class="headerlink" title="插件安装方式"></a>插件安装方式</h4><ul>
+<li>NPM安装（兼容性不好，往往只支持h5端，npm方式不支持小程序自定义组件）</li>
+<li>插件市场安装（兼容性好）</li>
+</ul>
+<h4 id="开发规范"><a href="#开发规范" class="headerlink" title="开发规范"></a>开发规范</h4><p>为了实现多端兼容，综合考虑编译速度、运行性能等因素，uni-app 约定了如下开发规范：</p>
+<blockquote>
+<p>页面文件遵循 Vue 单文件组件 (SFC) 规范<br>组件标签靠近小程序规范，详见uni-app 组件规范<br>接口能力（JS API）靠近微信小程序规范，但需将前缀 wx 替换为 uni，详见uni-app接口规范<br>数据绑定及事件处理同 Vue.js 规范，同时补充了App及页面的生命周期<br>为兼容多端运行，建议使用flex布局进行开发</p>
+</blockquote>
+<h4 id="运行环境判断"><a href="#运行环境判断" class="headerlink" title="运行环境判断"></a>运行环境判断</h4><ul>
+<li>在HBuilderX 中，点击“运行”编译出来的代码是开发环境，点击“发行”编译出来的代码是生产环境</li>
+<li>cli模式下，是通行的编译环境处理方式。</li>
+</ul>
+<p>ps:<code>process.env.NODE_ENV development</code>：开发环境，production：生产环境<br>可以自定义更多环境，比如测试环境</p>
+<h4 id="运行平台判断"><a href="#运行平台判断" class="headerlink" title="运行平台判断"></a>运行平台判断</h4><p>平台判断有2种场景，一种是在编译期判断，一种是在运行期判断。<br>编译期判断：编译期判断，即条件编译，不同平台在编译出包后已经是不同的代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #ifdef H5</span></span><br><span class="line">    alert(<span class="string">"只有h5平台才有alert方法"</span>)</span><br><span class="line"><span class="comment">// #endif</span></span><br></pre></td></tr></table></figure>
+
+<p><mark>如上代码只会编译到H5的发行包里，其他平台的包不会包含如上代码。</mark></p>
+<p>运行期判断：运行期判断是指代码已经打入包中，仍然需要在运行期判断平台，此时可使用 uni.getSystemInfoSync().platform 判断客户端环境是 Android、iOS 还是小程序开发工具（在百度小程序开发工具、微信小程序开发工具、支付宝小程序开发工具中使用 uni.getSystemInfoSync().platform 返回值均为 devtools）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(uni.getSystemInfoSync().platform)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'android'</span>:</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">'运行Android上'</span>)</span><br><span class="line">       <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'ios'</span>:</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">'运行iOS上'</span>)</span><br><span class="line">       <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">'运行在开发者工具上'</span>)</span><br><span class="line">       <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如有必要，也可以在条件编译里自己定义一个变量，赋不同值。在后续运行代码中动态判断环境</p>
+<h3 id="尺寸单位支持"><a href="#尺寸单位支持" class="headerlink" title="尺寸单位支持"></a>尺寸单位支持</h3><ul>
+<li><p>uniapp的vue页面支持通用css单位，还有upx（uniapp早期的自适应动态单位，不建议使用），rpx（微信的自适应动态单位，uniapp官方推荐）<br>一个页面屏幕宽度定义为750rpx/750upx<br>此外还有vh（视窗高度，1vh等于视窗高度的1%），vw（视窗宽度，1vw等于视窗宽度的1%）</p>
+</li>
+<li><p>nvue在uniapp模式下（支持原生渲染和webview渲染）可以使用rpx，px单位，但自weex模式下（weex模式下只支持原生渲染），weex只支持px（相当于rpx）和wx（相当于px）</p>
+</li>
+</ul>
+<h4 id="uniapp渲染方式"><a href="#uniapp渲染方式" class="headerlink" title="uniapp渲染方式"></a>uniapp渲染方式</h4><p>webview渲染：vue页面（web前端，不熟悉原生排版，建议以此为主，在App端某些vue页面表现不佳的场景下使用 nvue 作为强化补充）<br>原生渲染：nvue页面（weex或react native 开发者建议使用）<br>原生渲染针对app端，app端默认不开启纯原生渲染，即app中可以使用nvue和vue共同开发<br>manifest.json源码视图的”app-plus”下配置”renderer”:”native”即开启纯原生渲染模式，只支持nvue开发（此时pages.json注册的vue页面将被忽略，vue组件也将被原生渲染引擎来渲染。）<br>nvue适用于：高性能的特定区域长列表（如聊天记录·），软键盘按钮文字（如聊天工具）复杂高性能的自定义下拉刷新，左右拖动长列表，<br>解决前端控件无法覆盖原生控件的层级问题，深度使用map组件，深度使用video，直播推流，对app启动速度要求极致化<br>缺点：canvas性能不高，尤其是Android App平台，所以这个组件干脆没有内置，而是需要单独引入。（操作canvas动画，最高性能的方式是使用vue页面的renderjs技术）<br>      动态横竖屏：nvue页面的css不支持媒体查询，所以横竖屏动态切换、动态适配屏幕很困难</p>
+<h4 id="uniapp编译模式"><a href="#uniapp编译模式" class="headerlink" title="uniapp编译模式"></a>uniapp编译模式</h4><p>weex编译模式：仅适用于app（默认是weex？）<br>uni-app编译模式：所有端，包含小程序和H5<br>在 manifest.json 中修改2种编译模式，manifest.json -&gt; app-plus -&gt; nvueCompiler 切换编译模式。</p>
+<h4 id="uniapp的自定义组件处理方式"><a href="#uniapp的自定义组件处理方式" class="headerlink" title="uniapp的自定义组件处理方式"></a>uniapp的自定义组件处理方式</h4><p>自定义组件模式：即打包时在小程序端将SFC（vue单文件组件）打包为相应的自定义组件<br>非自定义组件模式：即打包时在小程序端将SFC（vue单文件组件）打包为相应的template模板（参照了mpvue，在打包时将组件编译为小程序模板，原因是小程序早期不支持自定义组件模式），老版本的uniapp默认这种方式，但小程序支持自定义组件<br>后，uniapp渐渐废弃了这种方式，现在只支持自定义组件模式（但此模式已于2019年11月起下线。）<br>manifest中<code>&quot;usingComponents&quot;:false</code></p>
+<h4 id="ES6支持"><a href="#ES6支持" class="headerlink" title="ES6支持"></a>ES6支持</h4><p>uni-app 在支持绝大部分 ES6 API 的同时，也支持了 ES7 的 await/async。<br>因为iOS上不允许三方js引擎，所以iOS上不区分App、小程序、H5，各端均仅依赖iOS版本。<br>各端Android版本有差异<br>Array的includes ios8不支持，values ios8和安卓不支持 String的normalize在ios10以下不支持，proxy安卓和ios10以下都不支持</p>
+<p>在 vue 文件的 script 节点声明 lang=”ts”<br>声明 lang=”ts” 后，该 vue 文件 import 进来的所有 vue 组件，均需要使用 ts 编写</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><h5 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h5><p>uniapp高度支持vue模板语法，在老版的非自定义组件模式下部分模版语法不支持<br>生命周期：uniapp支持vue组件实例的生命周期（vue应用概念）和应用/页面生命周期（小程序概念）</p>
+<h5 id="页面跳转"><a href="#页面跳转" class="headerlink" title="页面跳转"></a>页面跳转</h5><p>uniapp支持小程序类跳转或vue-router（需要自行配置）</p>
+<h5 id="全局状态管理"><a href="#全局状态管理" class="headerlink" title="全局状态管理"></a>全局状态管理</h5><p>1.vuex<br>vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。</p>
+<p>HBuilderX 2.2.5+起，支持vue和nvue之间共享<br>uniapp项目默认内置vuex，使用Vue.use注册使用即可</p>
+<p>2.公用模块<br>定义一个专用的模块，用来组织和管理这些全局的变量，在需要的页面引入。<br>示例：在 uni-app 项目根目录下创建 common 目录，然后在 common 目录下新建 helper.js 用于定义公用的方法。</p>
+<p>注意这种方式只支持多个vue页面或多个nvue页面之间公用，vue和nvue之间不公用。</p>
+<p>3.globalData<br>小程序中有个globalData概念，可以在 App 上声明全局变量。 Vue 之前是没有这类概念的，但 uni-app 引入了globalData概念，并且在包括H5、App等平台都实现了。<br>在 App.vue 可以定义 globalData ，也可以使用 API 读写这个值。</p>
+<p>globalData支持vue和nvue共享数据。</p>
+<p>globalData是一种比较简单的全局变量使用方式。<br>定义<br>App.vue</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;  </span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;  </span><br><span class="line">        globalData: &#123;  </span><br><span class="line">            text: <span class="string">'text'</span>  </span><br><span class="line">        &#125;,  </span><br><span class="line">        onLaunch: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'App Launch'</span>)  </span><br><span class="line">        &#125;,  </span><br><span class="line">        onShow: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'App Show'</span>)  </span><br><span class="line">        &#125;,  </span><br><span class="line">        onHide: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'App Hide'</span>)  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&lt;<span class="regexp">/script&gt;  </span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;style&gt;  </span></span><br><span class="line"><span class="regexp">    /</span>*每个页面公共css *<span class="regexp">/  </span></span><br><span class="line"><span class="regexp">&lt;/</span>style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>js中操作globalData的方式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//赋值</span></span><br><span class="line">getApp().globalData.text = <span class="string">'test'</span></span><br><span class="line"><span class="comment">//取值</span></span><br><span class="line"><span class="built_in">console</span>.log(getApp().globalData.text) <span class="comment">// 'test'</span></span><br></pre></td></tr></table></figure>
+
+<p>4.挂载 Vue.prototype<br>将一些使用频率较高的常量或者方法，直接扩展到 Vue.prototype 上，每个 Vue 对象都会“继承”下来。</p>
+<p>注意这种方式只支持vue页面<br>在 main.js 中挂载属性/方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.websiteUrl = <span class="string">'http://uniapp.dcloud.io'</span>;  </span><br><span class="line">Vue.prototype.now = <span class="built_in">Date</span>.now || <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();  </span><br><span class="line">&#125;;  </span><br><span class="line">Vue.prototype.isArray = <span class="built_in">Array</span>.isArray || <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>然后在 pages/index/index.vue 中调用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;  </span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;  </span><br><span class="line">        data() &#123;  </span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;  </span><br><span class="line">        &#125;,  </span><br><span class="line">        onLoad()&#123;  </span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'now:'</span> + <span class="keyword">this</span>.now());  </span><br><span class="line">        &#125;,  </span><br><span class="line">        methods: &#123;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方式，只需要在 main.js 中定义好即可在每个页面中直接调用。</p>
+<p>ps:</p>
+<ul>
+<li>每个页面中不要在出现重复的属性或方法名。</li>
+<li>建议在 Vue.prototype 上挂载的属性或方法，可以加一个统一的前缀。比如 $url、global_url 这样，在阅读代码时也容易与当前页面的内容区分开。</li>
+</ul>
+<h5 id="vue特性支持"><a href="#vue特性支持" class="headerlink" title="vue特性支持"></a>vue特性支持</h5><p>涉及到dom方面的特性，h5端全部支持，app旧版支持不高，app的v3模式增加更多支持，小程序几乎不支持（webview中没有dom概念，况且小程序端逻辑层和视图层分离，也不允许直接操作dom）<br>涉及到data方面的特性，几乎都支持</p>
+<h5 id="视图层的脚本语言支持"><a href="#视图层的脚本语言支持" class="headerlink" title="视图层的脚本语言支持"></a>视图层的脚本语言支持</h5><p>微信小程序端提供了wxs，百度小程序提供了Filter、阿里小程序提供了SJS，uni-app也支持使用这些功能，并将它们编译到百度和阿里的小程序端。不过它们的功能还不如wxs强大。此外头条系小程序自身不支持类似功能。<br>它的特点是运行在视图层的脚本。可避免逻辑层和渲染层交互通信折损，大大提示渲染性能，常用于数据的格式化以及视图层功能函数定义（类似于vue的filter以及util）</p>
+<h5 id="UI组件"><a href="#UI组件" class="headerlink" title="UI组件"></a>UI组件</h5><p>uniapp自己封装了一些常用的组件，兼容性好，在开发小程序时，如无特殊必要可以不用自定义小程序组件或者引用小程序组件，引用小程序组件时可以使用条件编译专门适配小程序<br>此外还有一些别的ui组件库可以按需引入（如uView，使用了easycom模式）</p>
+<h5 id="easycom"><a href="#easycom" class="headerlink" title="easycom"></a>easycom</h5><p>HBuilderX 2.5.5起支持easycom组件模式。<br>统vue组件，需要安装、引用、注册，三个步骤后才能使用组件。easycom将其精简为一步。 <mark>只要组件安装在项目的components目录下，并符合components/组件名称/组件名称.vue目录结构。就可以不用引用、注册，直接在页面中使用。</mark><br>不管components目录下安装了多少组件，easycom打包后会自动剔除没有使用的组件，对组件库的使用尤为友好。<br>组件库批量安装，随意使用，自动按需打包。以官方的uni-ui为例，在HBuilderX新建项目界面选择uni-ui项目模板，只需在页面中敲u，拉出大量组件代码块，直接选择，即可使用。大幅提升开发效率，降低使用门槛。</p>
+<p>在uni-app插件市场下载符合components/组件名称/组件名称.vue目录结构的组件，均可直接使用。</p>
+<p>easycom是自动开启的，不需要手动开启，有需求时可以在pages.json的easycom节点进行个性化设置，如关闭自动扫描，或自定义扫描匹配组件的策略。</p>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2020/08/15/vue%E5%85%B3%E9%94%AE%E7%9F%A5%E8%AF%86%E5%BC%BA%E5%8C%96/" class="article-next" title="vue关键知识强化"><i class="icon-arrow-right"></i></a>
+
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "7fbe80427f54741e289f",
+        clientSecret: "f34ed5fd92e54c9000bd37ba951948cb939deff5",
+        repo: "sanonz.github.io",
+        owner: "sanonz",
+        admin: ["sanonz"],
+        id: "2020/08/16/uniapp之平台差异梳理",
+        distractionFreeMode: true,
+        title: "uniapp之平台差异梳理",
+        body: "http://yoursite.com/2020/08/16/uniapp%E4%B9%8B%E5%B9%B3%E5%8F%B0%E5%B7%AE%E5%BC%82%E6%A2%B3%E7%90%86/",
+        labels: ["vue","uniapp"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e4027971a230b210f4671f485b33846a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+
+<!--添加的自定义特效-->
+<!--点击爱心特效-->
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤不做咸鱼！❤","❤拒绝懒惰！❤","❤想做吃货❤","❤拒绝单身❤","❤向大佬学习❤","❤扶我起来~❤","❤come on❤","❤一直在路上~❤","❤累了~❤","❤再趴一会❤","❤66666❤","❤高兴的飞起*****❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+<!--背景特效-->
+<script type="text/javascript" color="112,128,144" opacity="0.7" zIndex="-2" count="99">
+!function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}function t(e,t){return e(t={exports:{}},t.exports),t.exports}var n=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});var n=1;t.default=function(){return""+n++},e.exports=t.default});e(n);var o=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:30,n=null;return function(){for(var o=this,i=arguments.length,r=Array(i),a=0;a<i;a++)r[a]=arguments[a];clearTimeout(n),n=setTimeout(function(){e.apply(o,r)},t)}},e.exports=t.default});e(o);var i=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});t.SizeSensorId="size-sensor-id",t.SensorStyle="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1;opacity:0",t.SensorClassName="size-sensor-object"});e(i);i.SizeSensorId,i.SensorStyle,i.SensorClassName;var r=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,r=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,r.default)(function(){n.forEach(function(t){t(e)})}),a=function(){t&&t.parentNode&&(t.contentDocument.defaultView.removeEventListener("resize",o),t.parentNode.removeChild(t),t=void 0,n=[])};return{element:e,bind:function(r){t||(t=function(){"static"===getComputedStyle(e).position&&(e.style.position="relative");var t=document.createElement("object");return t.onload=function(){t.contentDocument.defaultView.addEventListener("resize",o),o()},t.setAttribute("style",i.SensorStyle),t.setAttribute("class",i.SensorClassName),t.type="text/html",e.appendChild(t),t.data="about:blank",t}()),-1===n.indexOf(r)&&n.push(r)},destroy:a,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&a()}}}});e(r);r.createSensor;var a=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,i=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,i.default)(function(){n.forEach(function(t){t(e)})}),r=function(){t.disconnect(),n=[],t=void 0};return{element:e,bind:function(i){t||(t=function(){var t=new ResizeObserver(o);return t.observe(e),o(),t}()),-1===n.indexOf(i)&&n.push(i)},destroy:r,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&r()}}}});e(a);a.createSensor;var s=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;t.createSensor="undefined"!=typeof ResizeObserver?a.createSensor:r.createSensor});e(s);s.createSensor;var u=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.removeSensor=t.getSensor=void 0;var o,r=(o=n)&&o.__esModule?o:{default:o};var a={};t.getSensor=function(e){var t=e.getAttribute(i.SizeSensorId);if(t&&a[t])return a[t];var n=(0,r.default)();e.setAttribute(i.SizeSensorId,n);var o=(0,s.createSensor)(e);return a[n]=o,o},t.removeSensor=function(e){var t=e.element.getAttribute(i.SizeSensorId);e.element.removeAttribute(i.SizeSensorId),e.destroy(),t&&a[t]&&delete a[t]}});e(u);u.removeSensor,u.getSensor;var c=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.clear=t.bind=void 0;t.bind=function(e,t){var n=(0,u.getSensor)(e);return n.bind(t),function(){n.unbind(t)}},t.clear=function(e){var t=(0,u.getSensor)(e);(0,u.removeSensor)(t)}});e(c);var l=c.clear,d=c.bind,v=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){return window.setTimeout(e,1e3/60)},f=window.cancelAnimationFrame||window.webkitCancelAnimationFrame||window.mozCancelAnimationFrame||window.msCancelAnimationFrame||window.oCancelAnimationFrame||window.clearTimeout,m=function(e){return new Array(e).fill(0).map(function(e,t){return t})},h=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,n,o){return n&&e(t.prototype,n),o&&e(t,o),t}}();var y=function(){function e(t,n){var o=this;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.randomPoints=function(){return m(o.c.count).map(function(){return{x:Math.random()*o.canvas.width,y:Math.random()*o.canvas.height,xa:2*Math.random()-1,ya:2*Math.random()-1,max:6e3}})},this.el=t,this.c=h({zIndex:-1,opacity:.5,color:"0,0,0",pointColor:"0,0,0",count:99},n),this.canvas=this.newCanvas(),this.context=this.canvas.getContext("2d"),this.points=this.randomPoints(),this.current={x:null,y:null,max:2e4},this.all=this.points.concat([this.current]),this.bindEvent(),this.requestFrame(this.drawCanvas)}return p(e,[{key:"bindEvent",value:function(){var e=this;d(this.el,function(){e.canvas.width=e.el.clientWidth,e.canvas.height=e.el.clientHeight}),this.onmousemove=window.onmousemove,window.onmousemove=function(t){e.current.x=t.clientX-e.el.offsetLeft+document.scrollingElement.scrollLeft,e.current.y=t.clientY-e.el.offsetTop+document.scrollingElement.scrollTop,e.onmousemove&&e.onmousemove(t)},this.onmouseout=window.onmouseout,window.onmouseout=function(){e.current.x=null,e.current.y=null,e.onmouseout&&e.onmouseout()}}},{key:"newCanvas",value:function(){"static"===getComputedStyle(this.el).position&&(this.el.style.position="relative");var e,t=document.createElement("canvas");return t.style.cssText="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:"+(e=this.c).zIndex+";opacity:"+e.opacity,t.width=this.el.clientWidth,t.height=this.el.clientHeight,this.el.appendChild(t),t}},{key:"requestFrame",value:function(e){var t=this;this.tid=v(function(){return e.call(t)})}},{key:"drawCanvas",value:function(){var e=this,t=this.context,n=this.canvas.width,o=this.canvas.height,i=this.current,r=this.points,a=this.all;t.clearRect(0,0,n,o);var s=void 0,u=void 0,c=void 0,l=void 0,d=void 0,v=void 0;r.forEach(function(r,f){for(r.x+=r.xa,r.y+=r.ya,r.xa*=r.x>n||r.x<0?-1:1,r.ya*=r.y>o||r.y<0?-1:1,t.fillStyle="rgba("+e.c.pointColor+")",t.fillRect(r.x-.5,r.y-.5,1,1),u=f+1;u<a.length;u++)null!==(s=a[u]).x&&null!==s.y&&(l=r.x-s.x,d=r.y-s.y,(v=l*l+d*d)<s.max&&(s===i&&v>=s.max/2&&(r.x-=.03*l,r.y-=.03*d),c=(s.max-v)/s.max,t.beginPath(),t.lineWidth=c/2,t.strokeStyle="rgba("+e.c.color+","+(c+.2)+")",t.moveTo(r.x,r.y),t.lineTo(s.x,s.y),t.stroke()))}),this.requestFrame(this.drawCanvas)}},{key:"destroy",value:function(){l(this.el),window.onmousemove=this.onmousemove,window.onmouseout=this.onmouseout,f(this.tid),this.canvas.parentNode.removeChild(this.canvas)}}]),e}();y.version="2.0.4";var w,b;new y(document.body,(w=document.getElementsByTagName("script"),{zIndex:(b=w[w.length-1]).getAttribute("zIndex"),opacity:b.getAttribute("opacity"),color:b.getAttribute("color"),pointColor:b.getAttribute("pointColor"),count:Number(b.getAttribute("count"))||99}))}();
+</script>
+</html>
