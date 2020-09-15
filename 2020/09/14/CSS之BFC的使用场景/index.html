@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>CSS之BFC的使用场景 | 刚刚有梦想</title>
+    <meta name="author" content="ggymx" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="BFC（Block formatting context ）“块级格式上下文”。 是用于布局块级盒子的一块渲染区域。并且与这个区域的外部毫无关系。BFC定义：BFC（Block formatting context ）“块级格式上下文”。 是用于布局块级盒子的一块渲染区域。并且与这个区域的外部毫无关系。特性：1.处于同一个BFC中的元素相互影响，可能会发生margin合并（垂直方向）；2.BFC在页面上是一个独立的容器，容器里面的子元素不会影响到外面的元素，反之亦然；3.计..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    <link rel="alternate" href="/atom.xml" title="刚刚有梦想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/images/avatar.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">刚刚有梦想</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/other">
+                <span class="nav-text">其他</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/atom.xml">
+                <span class="nav-text">订阅</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#BFC"><span class="toc-number">1.</span> <span class="toc-text">BFC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IFC"><span class="toc-number">2.</span> <span class="toc-text">IFC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FFC"><span class="toc-number">3.</span> <span class="toc-text">FFC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GFC"><span class="toc-number">4.</span> <span class="toc-text">GFC</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            CSS之BFC的使用场景
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/2020/09/14/CSS%E4%B9%8BBFC%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-09-13T16:05:01.000Z" itemprop="datePublished">2020-09-14</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/css/" rel="tag">css</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>BFC（Block formatting context ）“块级格式上下文”。 是用于布局块级盒子的一块渲染区域。并且与这个区域的外部毫无关系。</p>
+<a id="more"></a>
+
+<h4 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h4><p>定义：BFC（Block formatting context ）“块级格式上下文”。 是用于布局块级盒子的一块渲染区域。并且与这个区域的外部毫无关系。</p>
+<p><strong>特性</strong>：</p>
+<ul>
+<li>1.处于同一个BFC中的元素相互影响，可能会发生margin合并（垂直方向）；</li>
+<li>2.BFC在页面上是一个独立的容器，容器里面的子元素不会影响到外面的元素，反之亦然；</li>
+<li>3.计算BFC的高度时，考虑BFC所包含的所有元素，包括浮动元素也参与计算；</li>
+<li>4.浮动盒的区域不会叠加到BFC上；</li>
+</ul>
+<p><mark>形成规则</mark>：</p>
+<ul>
+<li>浮动（float的值不为none）；</li>
+<li>绝对定位元素（position的值为absolute或fixed）；</li>
+<li>行内块（display为inline-block）</li>
+<li>表格单元（display为table、table-cell、table-caption等HTML表格相关属性）；</li>
+<li>弹性盒（display为flex或inline-flex）；</li>
+<li>overflow不为visible；</li>
+</ul>
+<p>BFC使用场景：<br><mark>1.防止垂直margin重叠</mark><br>边界重叠是指两个或多个盒子(可能相邻也可能嵌套)的相邻边界(其间没有任何非空内容、补白、边框)重合在一起而形成一个单一边界。<br>两个或多个块级盒子的垂直相邻边界会重合，它们的边界宽度是相邻边界宽度中的最大值。注意水平边界是不会重合的。</p>
+<p>a：防止父子元素的边界重叠<br>默认效果：若块元素和它的第一个子元素（或最后一个子元素）之间没有 border、padding、inline content、 clearance 来分隔，那么上边距（或下边距）会被父子元素所共享，父子元素边界重合<br>解决方案：根据BFC的特性2,让父元素成为BFC即可。<br>示例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">    <span class="selector-class">.parent</span> &#123;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#E7A1C5</span>;</span><br><span class="line">        <span class="comment">/*overflow：hidden使其形成一个BFC*/</span></span><br><span class="line">        <span class="attribute">overflow</span>:hidden;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.parent</span> <span class="selector-class">.child</span> &#123;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#C8CDF5</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">        <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;section class="parent"&gt;</span><br><span class="line">    &lt;article class="child"&gt;&lt;/article&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+
+<p>前后对比：<br><img src="./imgs/BFC%E8%A7%A3%E5%86%B3%E7%88%B6%E5%AD%90%E5%85%83%E7%B4%A0%E8%BE%B9%E7%95%8C%E9%87%8D%E5%8F%A0%E5%89%8D%E6%95%88%E6%9E%9C.png" alt="BFC解决父子元素边界重叠前效果"> <img src="./imgs/BFC%E8%A7%A3%E5%86%B3%E7%88%B6%E5%AD%90%E5%85%83%E7%B4%A0%E8%BE%B9%E7%95%8C%E9%87%8D%E5%8F%A0.png" alt="BFC解决父子元素边界重叠"></p>
+<p>b:防止兄弟元素的边界重叠<br>默认效果：在同一个BFC中的两个元素垂直方向上的margin会发生合并，外边距以大的为准<br>示例：默认效果</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">    <span class="selector-id">#margin</span> &#123;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#E7A1C5</span>;</span><br><span class="line">        <span class="attribute">overflow</span>: hidden;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-id">#margin</span>&gt;<span class="selector-tag">p</span> &#123;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#C8CDF5</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">20px</span> auto <span class="number">30px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;section id="margin"&gt;</span><br><span class="line">    &lt;p&gt;1&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;2&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;3&lt;/p&gt;</span><br><span class="line">&lt;/section&gt;</span><br></pre></td></tr></table></figure>
+
+<p>默认效果：<br><img src="./imgs/%E5%85%84%E5%BC%9F%E5%85%83%E7%B4%A0%E8%BE%B9%E7%95%8C%E9%87%8D%E5%8F%A0.png" alt="兄弟元素边界重叠"><br>可以看到1和2,2和3之间的间距不是50px，发生了边距重叠是取了它们之间的最大值30px。（垂直方向margin合并）<br>解决方案：根据BFC的特性2，在不需要margin合并的元素外创建一个BFC上下文（外围用一个BFC包裹）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">"margin"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--外围创建一个BFC上下文--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"overflow:hidden;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改后效果：<br><img src="./imgs/%E5%85%84%E5%BC%9F%E5%85%83%E7%B4%A0%E8%BE%B9%E7%95%8C%E9%87%8D%E5%8F%A0%E4%BF%AE%E5%A4%8D%E5%90%8E.png" alt="兄弟元素边界重叠修复后">;<br>注：其实空元素的边界也会重叠（假设有一个空元素，它有外边距，但是没有边框或填充。在这种情况下，上外边距与下外边距就碰到了一起，它们会发生合并，这个时候只需要在上下边距之间有填充即可）<br><img src="./imgs/%E7%A9%BA%E7%99%BD%E5%85%83%E7%B4%A0%E8%BE%B9%E7%95%8C%E9%87%8D%E5%8F%A0.png" alt="空白元素边界重叠"></p>
+<p><mark>2.阻止元素被浮动的元素覆盖（可做两栏布局自适应）</mark><br>默认效果：某元素会被旁边浮动元素遮盖<br>解决方案：根据BFC特性4，让该元素成为BFC即可<br>示例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> &lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">        <span class="selector-class">.box</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">margin</span>: <span class="number">0</span>  auto;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.green</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">background-color</span>: green;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.red</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="comment">/*添加overflow：hidden使红色盒子成为BFC*/</span></span><br><span class="line">            <span class="attribute">overflow</span>: hidden;</span><br><span class="line">            <span class="attribute">background-color</span>: red;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">    &lt;div class="box"&gt;</span><br><span class="line">        &lt;div class="green"&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class="red"&gt;BFC&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>前后对比<br><img src="./imgs/%E6%B5%AE%E5%8A%A8%E5%85%83%E7%B4%A0%E9%81%AE%E6%8C%A1%E6%99%AE%E9%80%9A%E5%85%83%E7%B4%A0.png" alt="浮动元素遮挡普通元素">)<img src="./imgs/%E6%B5%AE%E5%8A%A8%E5%85%83%E7%B4%A0%E9%81%AE%E6%8C%A1%E6%99%AE%E9%80%9A%E5%85%83%E7%B4%A0%E4%BF%AE%E5%A4%8D.png" alt="兄弟元素边界重叠修复后"><br>注：将红色盒子设置为BFC后，若该盒子没有设置宽度，则该盒子会根据父元素和绿色盒子（浮动元素）的宽度来进行自适应，因此可做两栏布局自适应。</p>
+<p><mark>3.清除子元素浮动的副作用</mark><br>默认效果：当我们不给父元素设置高度，子元素设置浮动的时候，父元素会发生高度塌陷<br>解决方案：根据BFC特性3，让父元素成为BFC即可<br>示例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> &lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">        <span class="selector-class">.box</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#ccc</span>;</span><br><span class="line">            <span class="comment">/*添加overflow:hidden使其成为BFC*/</span></span><br><span class="line">            overflow：hidden;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="selector-class">.son</span> &#123;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: green;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">    &lt;div class="box"&gt;</span><br><span class="line">        &lt;div class="son"&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>前后对比：<br><img src="./imgs/%E6%B5%AE%E5%8A%A8%E5%89%AF%E4%BD%9C%E7%94%A8.png" alt="浮动副作用">)<img src="./imgs/%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8.png" alt="清除浮动"></p>
+<h4 id="IFC"><a href="#IFC" class="headerlink" title="IFC"></a>IFC</h4><p>定义：Inline Formatting Contexts，也就是“内联格式化上下文”。</p>
+<p>特性：</p>
+<ul>
+<li>1.子元素水平方向横向排列，并且垂直方向起点为元素顶部。</li>
+<li><mark>2.子元素只会计算横向样式空间，【padding、border、margin】，垂直方向样式空间不会被计算，【padding、border、margin】。</mark><br>在垂直方向上，子元素会以不同形式来对齐（vertical-align）</li>
+<li>3.能把在一行上的框都完全包含进去的一个矩形区域，被称为该行的行框（line box）。行框的宽度是由包含块（containing box）和与其中的浮动来决定。</li>
+<li><mark>4.IFC中的“line box”一般左右边贴紧其包含块，但float元素会优先排列。</mark></li>
+<li><mark>5.IFC中的“line box”高度由 CSS 行高计算规则来确定，同个IFC下的多个line box高度可能会不同。</mark></li>
+<li><mark>6.当 inline-level boxes的总宽度少于包含它们的line box时，其水平渲染规则由 text-align 属性值来决定。</mark></li>
+<li>7.当一个“inline box”超过父元素的宽度时，它会被分割成多个boxes，这些 oxes 分布在多个“line box”中。如果子元素未设置强制换行的情况下，“inline box”将不可被分割，将会溢出父元素。</li>
+</ul>
+<p>形成规则：</p>
+<ul>
+<li><mark>块级元素中仅包含内联级别元素</mark></li>
+</ul>
+<p>ps：是当IFC中有块级元素插入时，会产生两个匿名块将父元素分割开来，产生两个IFC</p>
+<p>IFC产生的现象：<br>1.<mark>文本的上下间距不生效（IFC特性2导致）</mark></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line"><span class="selector-class">.warp</span> &#123; <span class="attribute">border</span>: <span class="number">1px</span> solid red; <span class="attribute">display</span>: inline-block; &#125;</span><br><span class="line"><span class="selector-class">.text</span> &#123;</span><br><span class="line">  <span class="comment">/*内联元素只有左右margin生效了*/</span></span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">background</span>: green;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div class="warp"&gt;</span><br><span class="line">    &lt;span class="text"&gt;文本一&lt;/span&gt;</span><br><span class="line">    &lt;span class="text"&gt;文本二&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>效果：左右margin撑开，上下margin并未撑开，符合IFC规范，只计算横向样式控件，不计算纵向样式空间。<br><img src="./imgs/IFC%E4%B8%AD%E6%96%87%E6%9C%AC%E4%B8%8A%E4%B8%8B%E9%97%B4%E8%B7%9D%E4%B8%8D%E7%94%9F%E6%95%88.png" alt="IFC中文本上下间距不生效.png"></p>
+<p>2.<mark>多个元素水平居中（IFC特性6导致）</mark></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">  <span class="selector-class">.warp</span> &#123; <span class="attribute">border</span>: <span class="number">1px</span> solid red; <span class="attribute">width</span>: <span class="number">200px</span>; <span class="attribute">text-align</span>: center; &#125;</span><br><span class="line">  <span class="selector-class">.text</span> &#123; <span class="attribute">background</span>: green; &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div class="warp"&gt;</span><br><span class="line">    &lt;span class="text"&gt;文本一&lt;/span&gt;</span><br><span class="line">    &lt;span class="text"&gt;文本二&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>效果：水平排列规则根据IFC容器的text-align值来排列，可以用来实现多个子元素的水平居中。</p>
+<p>3.<mark>float元素优先排列（IFC特性4导致）</mark></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line"><span class="selector-class">.warp</span> &#123; <span class="attribute">border</span>: <span class="number">1px</span> solid red; <span class="attribute">width</span>: <span class="number">200px</span>; &#125;</span><br><span class="line"><span class="selector-class">.text</span> &#123; <span class="attribute">background</span>: green; &#125;</span><br><span class="line"><span class="selector-class">.f-l</span> &#123; <span class="attribute">float</span>: left; &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div class="warp"&gt;</span><br><span class="line">    &lt;span class="text"&gt;这是文本1&lt;/span&gt;</span><br><span class="line">    &lt;span class="text"&gt;这是文本2&lt;/span&gt;</span><br><span class="line">    &lt;span class="text f-l"&gt;这是文本3&lt;/span&gt;</span><br><span class="line">    &lt;span class="text"&gt;这是文本4&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>效果：IFC中具备float属性值的元素优先排列，在很多场景中用来在文章段落开头添加“tag”可以用到。<br><img src="./imgs/IFC%E4%BD%BF%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD.png" alt="IFC使元素水平居中"><br>利用IFC还可以做很多其他的事情，例如：解决元素垂直居中、多个文本元素行高不一致排列混乱。</p>
+<h4 id="FFC"><a href="#FFC" class="headerlink" title="FFC"></a>FFC</h4><p>FFC(Flex Formatting Contexts)直译为”自适应格式化上下文”，display值为flex 或者 inline-flex 的元素将会生成自适应容器（flex container）。</p>
+<h4 id="GFC"><a href="#GFC" class="headerlink" title="GFC"></a>GFC</h4><p>GFC(GridLayout Formatting Contexts)直译为”网格布局格式化上下文”，即display值为grid的元素<br>和 table 的区别：同样是一个二维表格，gridLayout 会以更加丰富的属性来控制行列、控制对齐以及更精细的控制语义</p>
+<hr>
+<p>相关问题：</p>
+<blockquote>
+<p>BFC定义：块级格式化上下文，BFC就是一个页面上独立的容器，规定了内部的块级元素如何布局，并且这些块级元素不会影响外部元素。<br> BFC有以下约束规则：<br> 1.内部的BOX会在垂直方向上一个接一个的放置<br> 2.同一个BFC的两个相邻BOX的margin会发生重叠<br> 3.每个元素的左外边距和包含块的左边界相接触<br> 4.BFC的区域不会和float的区域重叠<br> 5.计算BFC高度时，浮动子元素也参与计算<br>BFC的作用<br> 1.自适应两栏布局<br> 2.清除浮动<br> 3.防止垂直margin重叠<br>BFC的生成条件<br> 1.根元素<br> 2.overflow不为visiable<br> 3.float不为none<br> 4.position属性为absolute/fixed<br> 5.display为inline-block、table-cell、flex等<br>清除浮动的方法<br> 1.父元素BFC overflow:hidden<br> 2.新增底部兄弟元素 clear:both 块级元素的左右都不能有浮动元素<br> 3.添加自身伪元素 伪元素是元素的子元素，在元素的内容之前或者之后</p>
+</blockquote>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2020/08/16/uniapp%E4%B9%8B%E5%B9%B3%E5%8F%B0%E5%B7%AE%E5%BC%82%E6%A2%B3%E7%90%86/" class="article-next" title="uniapp之平台差异梳理"><i class="icon-arrow-right"></i></a>
+
+
+<a id="pageprev" href="/2020/09/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B/" class="article-prev" title="微信小程序登录流程"><i class="icon-arrow-left"></i></a>
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "7fbe80427f54741e289f",
+        clientSecret: "f34ed5fd92e54c9000bd37ba951948cb939deff5",
+        repo: "sanonz.github.io",
+        owner: "sanonz",
+        admin: ["sanonz"],
+        id: "2020/09/14/CSS之BFC的使用场景",
+        distractionFreeMode: true,
+        title: "CSS之BFC的使用场景",
+        body: "http://yoursite.com/2020/09/14/CSS%E4%B9%8BBFC%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/",
+        labels: ["css"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e4027971a230b210f4671f485b33846a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+
+<!--添加的自定义特效-->
+<!--点击爱心特效-->
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤不做咸鱼！❤","❤拒绝懒惰！❤","❤想做吃货❤","❤拒绝单身❤","❤向大佬学习❤","❤扶我起来~❤","❤come on❤","❤一直在路上~❤","❤累了~❤","❤再趴一会❤","❤66666❤","❤高兴的飞起*****❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+<!--背景特效-->
+<script type="text/javascript" color="112,128,144" opacity="0.7" zIndex="-2" count="99">
+!function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}function t(e,t){return e(t={exports:{}},t.exports),t.exports}var n=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});var n=1;t.default=function(){return""+n++},e.exports=t.default});e(n);var o=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:30,n=null;return function(){for(var o=this,i=arguments.length,r=Array(i),a=0;a<i;a++)r[a]=arguments[a];clearTimeout(n),n=setTimeout(function(){e.apply(o,r)},t)}},e.exports=t.default});e(o);var i=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});t.SizeSensorId="size-sensor-id",t.SensorStyle="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1;opacity:0",t.SensorClassName="size-sensor-object"});e(i);i.SizeSensorId,i.SensorStyle,i.SensorClassName;var r=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,r=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,r.default)(function(){n.forEach(function(t){t(e)})}),a=function(){t&&t.parentNode&&(t.contentDocument.defaultView.removeEventListener("resize",o),t.parentNode.removeChild(t),t=void 0,n=[])};return{element:e,bind:function(r){t||(t=function(){"static"===getComputedStyle(e).position&&(e.style.position="relative");var t=document.createElement("object");return t.onload=function(){t.contentDocument.defaultView.addEventListener("resize",o),o()},t.setAttribute("style",i.SensorStyle),t.setAttribute("class",i.SensorClassName),t.type="text/html",e.appendChild(t),t.data="about:blank",t}()),-1===n.indexOf(r)&&n.push(r)},destroy:a,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&a()}}}});e(r);r.createSensor;var a=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,i=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,i.default)(function(){n.forEach(function(t){t(e)})}),r=function(){t.disconnect(),n=[],t=void 0};return{element:e,bind:function(i){t||(t=function(){var t=new ResizeObserver(o);return t.observe(e),o(),t}()),-1===n.indexOf(i)&&n.push(i)},destroy:r,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&r()}}}});e(a);a.createSensor;var s=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;t.createSensor="undefined"!=typeof ResizeObserver?a.createSensor:r.createSensor});e(s);s.createSensor;var u=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.removeSensor=t.getSensor=void 0;var o,r=(o=n)&&o.__esModule?o:{default:o};var a={};t.getSensor=function(e){var t=e.getAttribute(i.SizeSensorId);if(t&&a[t])return a[t];var n=(0,r.default)();e.setAttribute(i.SizeSensorId,n);var o=(0,s.createSensor)(e);return a[n]=o,o},t.removeSensor=function(e){var t=e.element.getAttribute(i.SizeSensorId);e.element.removeAttribute(i.SizeSensorId),e.destroy(),t&&a[t]&&delete a[t]}});e(u);u.removeSensor,u.getSensor;var c=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.clear=t.bind=void 0;t.bind=function(e,t){var n=(0,u.getSensor)(e);return n.bind(t),function(){n.unbind(t)}},t.clear=function(e){var t=(0,u.getSensor)(e);(0,u.removeSensor)(t)}});e(c);var l=c.clear,d=c.bind,v=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){return window.setTimeout(e,1e3/60)},f=window.cancelAnimationFrame||window.webkitCancelAnimationFrame||window.mozCancelAnimationFrame||window.msCancelAnimationFrame||window.oCancelAnimationFrame||window.clearTimeout,m=function(e){return new Array(e).fill(0).map(function(e,t){return t})},h=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,n,o){return n&&e(t.prototype,n),o&&e(t,o),t}}();var y=function(){function e(t,n){var o=this;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.randomPoints=function(){return m(o.c.count).map(function(){return{x:Math.random()*o.canvas.width,y:Math.random()*o.canvas.height,xa:2*Math.random()-1,ya:2*Math.random()-1,max:6e3}})},this.el=t,this.c=h({zIndex:-1,opacity:.5,color:"0,0,0",pointColor:"0,0,0",count:99},n),this.canvas=this.newCanvas(),this.context=this.canvas.getContext("2d"),this.points=this.randomPoints(),this.current={x:null,y:null,max:2e4},this.all=this.points.concat([this.current]),this.bindEvent(),this.requestFrame(this.drawCanvas)}return p(e,[{key:"bindEvent",value:function(){var e=this;d(this.el,function(){e.canvas.width=e.el.clientWidth,e.canvas.height=e.el.clientHeight}),this.onmousemove=window.onmousemove,window.onmousemove=function(t){e.current.x=t.clientX-e.el.offsetLeft+document.scrollingElement.scrollLeft,e.current.y=t.clientY-e.el.offsetTop+document.scrollingElement.scrollTop,e.onmousemove&&e.onmousemove(t)},this.onmouseout=window.onmouseout,window.onmouseout=function(){e.current.x=null,e.current.y=null,e.onmouseout&&e.onmouseout()}}},{key:"newCanvas",value:function(){"static"===getComputedStyle(this.el).position&&(this.el.style.position="relative");var e,t=document.createElement("canvas");return t.style.cssText="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:"+(e=this.c).zIndex+";opacity:"+e.opacity,t.width=this.el.clientWidth,t.height=this.el.clientHeight,this.el.appendChild(t),t}},{key:"requestFrame",value:function(e){var t=this;this.tid=v(function(){return e.call(t)})}},{key:"drawCanvas",value:function(){var e=this,t=this.context,n=this.canvas.width,o=this.canvas.height,i=this.current,r=this.points,a=this.all;t.clearRect(0,0,n,o);var s=void 0,u=void 0,c=void 0,l=void 0,d=void 0,v=void 0;r.forEach(function(r,f){for(r.x+=r.xa,r.y+=r.ya,r.xa*=r.x>n||r.x<0?-1:1,r.ya*=r.y>o||r.y<0?-1:1,t.fillStyle="rgba("+e.c.pointColor+")",t.fillRect(r.x-.5,r.y-.5,1,1),u=f+1;u<a.length;u++)null!==(s=a[u]).x&&null!==s.y&&(l=r.x-s.x,d=r.y-s.y,(v=l*l+d*d)<s.max&&(s===i&&v>=s.max/2&&(r.x-=.03*l,r.y-=.03*d),c=(s.max-v)/s.max,t.beginPath(),t.lineWidth=c/2,t.strokeStyle="rgba("+e.c.color+","+(c+.2)+")",t.moveTo(r.x,r.y),t.lineTo(s.x,s.y),t.stroke()))}),this.requestFrame(this.drawCanvas)}},{key:"destroy",value:function(){l(this.el),window.onmousemove=this.onmousemove,window.onmouseout=this.onmouseout,f(this.tid),this.canvas.parentNode.removeChild(this.canvas)}}]),e}();y.version="2.0.4";var w,b;new y(document.body,(w=document.getElementsByTagName("script"),{zIndex:(b=w[w.length-1]).getAttribute("zIndex"),opacity:b.getAttribute("opacity"),color:b.getAttribute("color"),pointColor:b.getAttribute("pointColor"),count:Number(b.getAttribute("count"))||99}))}();
+</script>
+</html>

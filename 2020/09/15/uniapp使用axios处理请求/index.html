@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>uniapp使用axios处理请求 | 刚刚有梦想</title>
+    <meta name="author" content="ggymx" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="uniapp可以使用原生的请求方式，uni.request()，但涉及到请求或者响应拦截 可能需要自己动手去写，因此这里使用axios去处理uniapp的网络请求引入axios1npm install axios --save创建axios实例util/request.js12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    <link rel="alternate" href="/atom.xml" title="刚刚有梦想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/images/avatar.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">刚刚有梦想</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/other">
+                <span class="nav-text">其他</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/atom.xml">
+                <span class="nav-text">订阅</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#引入axios"><span class="toc-number">1.</span> <span class="toc-text">引入axios</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建axios实例"><span class="toc-number">2.</span> <span class="toc-text">创建axios实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#请求中使用axios实例"><span class="toc-number">3.</span> <span class="toc-text">请求中使用axios实例</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            uniapp使用axios处理请求
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/2020/09/15/uniapp%E4%BD%BF%E7%94%A8axios%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-09-15T15:53:50.000Z" itemprop="datePublished">2020-09-15</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/uniapp/" rel="tag">uniapp</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>uniapp可以使用原生的请求方式，uni.request()，但涉及到请求或者响应拦截 可能需要自己动手去写，因此这里使用axios去处理uniapp的网络请求</p>
+<a id="more"></a>
+
+<h4 id="引入axios"><a href="#引入axios" class="headerlink" title="引入axios"></a>引入axios</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install axios --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建axios实例"><a href="#创建axios实例" class="headerlink" title="创建axios实例"></a>创建axios实例</h4><p>util/request.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//封装axios请求</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'@/store'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log('token-----------------------------&gt;',store.state.token)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// create an axios instance</span></span><br><span class="line"><span class="keyword">const</span> service = axios.create(&#123;</span><br><span class="line"> <span class="comment">// baseURL:'http://3333.com',</span></span><br><span class="line"> <span class="comment">// withCredentials: true, //允许跨域携带cookie</span></span><br><span class="line"> <span class="comment">// send cookies when cross-domain requests 注意：withCredentials和后端配置的cross跨域不可同时使用</span></span><br><span class="line"> timeout: <span class="number">6000</span>, <span class="comment">// request timeout</span></span><br><span class="line"> <span class="keyword">async</span>: <span class="literal">true</span>,</span><br><span class="line"> crossDomain: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// request拦截器,在请求之前做一些处理</span></span><br><span class="line">service.interceptors.request.use(</span><br><span class="line"> config =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (store.state.token) &#123;</span><br><span class="line">   <span class="comment">// 给请求头添加user-token</span></span><br><span class="line">   config.headers[<span class="string">"Authorization"</span>] = <span class="string">'Bearer '</span> + store.state.token;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// console.log('请求拦截成功')</span></span><br><span class="line">  <span class="comment">//针对媒体类型数据进行特殊处理</span></span><br><span class="line">  <span class="keyword">if</span> (config.method === <span class="string">'formdata'</span>) &#123;</span><br><span class="line">   config.method = <span class="string">'POST'</span>;</span><br><span class="line">   config.headers[<span class="string">'Content-Type'</span>] = <span class="string">'multipart/form-data'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// console.log('请求拦截器config------------------',config)</span></span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line"> &#125;,</span><br><span class="line"> error =&gt; &#123;</span><br><span class="line">  <span class="comment">// console.log('请求拦截器错误-------------', error); // for debug</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error);</span><br><span class="line"> &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">//配置成功后的拦截器</span></span><br><span class="line">service.interceptors.response.use(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="comment">// console.log('响应拦截器res---------------', res)</span></span><br><span class="line"> <span class="comment">//res.data.status== 200</span></span><br><span class="line"> <span class="keyword">if</span> (res.data.code == <span class="number">0</span> || res.data.code == <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> res.data</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(res.data.msg);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line"> <span class="comment">// console.log('响应拦截器错误--------------', error)</span></span><br><span class="line"> <span class="keyword">if</span> (error.response.status) &#123;</span><br><span class="line">  <span class="keyword">switch</span> (error.response.status) &#123;</span><br><span class="line">   <span class="keyword">case</span> <span class="number">401</span>:</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">   <span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(error)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在main.js中放入这段自定义适配器的代码，就可以实现uniapp的app和小程序开发中能使用axios进行跨域网络请求，并支持携带cookie</span></span><br><span class="line">axios.defaults.adapter = <span class="function"><span class="keyword">function</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// console.log('axios自定义适配器-------------',config)</span></span><br><span class="line">  <span class="keyword">var</span> settle = <span class="built_in">require</span>(<span class="string">'axios/lib/core/settle'</span>);</span><br><span class="line">  <span class="keyword">var</span> buildURL = <span class="built_in">require</span>(<span class="string">'axios/lib/helpers/buildURL'</span>);</span><br><span class="line">  <span class="comment">//当baseURL为undefined时，不让小程序端前缀加上baseURL</span></span><br><span class="line">  <span class="keyword">const</span> baseURL= config.baseURL?config.baseURL:<span class="string">''</span>;</span><br><span class="line">  <span class="comment">// console.log('config.baseURL--------------',config.baseURL),</span></span><br><span class="line">  <span class="comment">// console.log('buildURL(config.url, config.params, config.paramsSerializer)',buildURL(config.url, config.params, config.paramsSerializer))</span></span><br><span class="line">  uni.request(&#123;</span><br><span class="line">   method: config.method.toUpperCase(),</span><br><span class="line">   url: baseURL + buildURL(config.url, config.params, config.paramsSerializer),</span><br><span class="line">   header: config.headers,</span><br><span class="line">   data: config.data,</span><br><span class="line">   dataType: config.dataType,</span><br><span class="line">   responseType: config.responseType,</span><br><span class="line">   sslVerify: config.sslVerify,</span><br><span class="line">   complete: <span class="function"><span class="keyword">function</span> <span class="title">complete</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// console.log("执行完成：", response)</span></span><br><span class="line">    response = &#123;</span><br><span class="line">     data: response.data,</span><br><span class="line">     status: response.statusCode,</span><br><span class="line">     errMsg: response.errMsg,</span><br><span class="line">     header: response.header,</span><br><span class="line">     config: config</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    settle(resolve, reject, response)</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"> &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> service</span><br></pre></td></tr></table></figure>
+
+<p>注：当没有配置axios的baseURL时，在小程序端会发生请求错误<br>出错原因：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//没有配置axios的baseURL时，小程序端会在每个请求前加上undifined</span></span><br><span class="line">url: config.baseURL + buildURL(config.url, config.params, config.paramsSerializer),</span><br></pre></td></tr></table></figure>
+
+<p>解决方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> baseURL= config.baseURL?config.baseURL:<span class="string">''</span>;</span><br><span class="line">...</span><br><span class="line">url: baseURL + buildURL(config.url, config.params, config.paramsSerializer),</span><br></pre></td></tr></table></figure>
+
+<h4 id="请求中使用axios实例"><a href="#请求中使用axios实例" class="headerlink" title="请求中使用axios实例"></a>请求中使用axios实例</h4><p>api/policy/policy.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> service <span class="keyword">from</span> <span class="string">'@/util/request'</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line"> policy</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">'@/api/url'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> addPolicy = <span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="keyword">return</span> service(&#123;</span><br><span class="line">  url: <span class="string">`<span class="subst">$&#123;policy&#125;</span>/insure/insure/addInsure`</span>,</span><br><span class="line">  method: <span class="string">'POST'</span>,</span><br><span class="line">  data</span><br><span class="line"> &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//车型列表查询</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getCarList = <span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="keyword">return</span> service(&#123;</span><br><span class="line">  url: <span class="string">`<span class="subst">$&#123;policy&#125;</span>/insure/insureAsset/searchInsureAssetListPage`</span>,</span><br><span class="line">  method: <span class="string">'POST'</span>,</span><br><span class="line">  data</span><br><span class="line"> &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//资产关联属性查询</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getAssetAndAttributeList = <span class="function"><span class="params">data</span> =&gt;</span>&#123;</span><br><span class="line"> <span class="keyword">return</span> service(&#123;</span><br><span class="line">  url:<span class="string">`<span class="subst">$&#123;policy&#125;</span>/insure/insureAsset/searchAssetAndAttributeListPage`</span>,</span><br><span class="line">  method: <span class="string">'POST'</span>,</span><br><span class="line">  data</span><br><span class="line"> &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ps: api/url.js存放api的基路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//配置api的URL</span></span><br><span class="line"><span class="keyword">const</span> env = process.env.NODE_ENV</span><br><span class="line"><span class="comment">//https://website-pm-private.solarmanpv.com/oauth_dk</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> login = env === <span class="string">'production'</span>?<span class="string">'http://10.168.30.31:33005'</span>:<span class="string">'http://192.168.30.97:33005'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> policy = env ===<span class="string">'production'</span>?<span class="string">'http://192.168.30.97:50001'</span>:<span class="string">'http://192.168.30.97:50001'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> message = env ===<span class="string">'prodction'</span>?<span class="string">''</span>:<span class="string">''</span></span><br></pre></td></tr></table></figure>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2020/09/15/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B/" class="article-next" title="微信小程序登录流程"><i class="icon-arrow-right"></i></a>
+
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "7fbe80427f54741e289f",
+        clientSecret: "f34ed5fd92e54c9000bd37ba951948cb939deff5",
+        repo: "sanonz.github.io",
+        owner: "sanonz",
+        admin: ["sanonz"],
+        id: "2020/09/15/uniapp使用axios处理请求",
+        distractionFreeMode: true,
+        title: "uniapp使用axios处理请求",
+        body: "http://yoursite.com/2020/09/15/uniapp%E4%BD%BF%E7%94%A8axios%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/",
+        labels: ["uniapp"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e4027971a230b210f4671f485b33846a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+
+<!--添加的自定义特效-->
+<!--点击爱心特效-->
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤不做咸鱼！❤","❤拒绝懒惰！❤","❤想做吃货❤","❤拒绝单身❤","❤向大佬学习❤","❤扶我起来~❤","❤come on❤","❤一直在路上~❤","❤累了~❤","❤再趴一会❤","❤66666❤","❤高兴的飞起*****❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+<!--背景特效-->
+<script type="text/javascript" color="112,128,144" opacity="0.7" zIndex="-2" count="99">
+!function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}function t(e,t){return e(t={exports:{}},t.exports),t.exports}var n=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});var n=1;t.default=function(){return""+n++},e.exports=t.default});e(n);var o=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:30,n=null;return function(){for(var o=this,i=arguments.length,r=Array(i),a=0;a<i;a++)r[a]=arguments[a];clearTimeout(n),n=setTimeout(function(){e.apply(o,r)},t)}},e.exports=t.default});e(o);var i=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});t.SizeSensorId="size-sensor-id",t.SensorStyle="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1;opacity:0",t.SensorClassName="size-sensor-object"});e(i);i.SizeSensorId,i.SensorStyle,i.SensorClassName;var r=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,r=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,r.default)(function(){n.forEach(function(t){t(e)})}),a=function(){t&&t.parentNode&&(t.contentDocument.defaultView.removeEventListener("resize",o),t.parentNode.removeChild(t),t=void 0,n=[])};return{element:e,bind:function(r){t||(t=function(){"static"===getComputedStyle(e).position&&(e.style.position="relative");var t=document.createElement("object");return t.onload=function(){t.contentDocument.defaultView.addEventListener("resize",o),o()},t.setAttribute("style",i.SensorStyle),t.setAttribute("class",i.SensorClassName),t.type="text/html",e.appendChild(t),t.data="about:blank",t}()),-1===n.indexOf(r)&&n.push(r)},destroy:a,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&a()}}}});e(r);r.createSensor;var a=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,i=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,i.default)(function(){n.forEach(function(t){t(e)})}),r=function(){t.disconnect(),n=[],t=void 0};return{element:e,bind:function(i){t||(t=function(){var t=new ResizeObserver(o);return t.observe(e),o(),t}()),-1===n.indexOf(i)&&n.push(i)},destroy:r,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&r()}}}});e(a);a.createSensor;var s=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;t.createSensor="undefined"!=typeof ResizeObserver?a.createSensor:r.createSensor});e(s);s.createSensor;var u=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.removeSensor=t.getSensor=void 0;var o,r=(o=n)&&o.__esModule?o:{default:o};var a={};t.getSensor=function(e){var t=e.getAttribute(i.SizeSensorId);if(t&&a[t])return a[t];var n=(0,r.default)();e.setAttribute(i.SizeSensorId,n);var o=(0,s.createSensor)(e);return a[n]=o,o},t.removeSensor=function(e){var t=e.element.getAttribute(i.SizeSensorId);e.element.removeAttribute(i.SizeSensorId),e.destroy(),t&&a[t]&&delete a[t]}});e(u);u.removeSensor,u.getSensor;var c=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.clear=t.bind=void 0;t.bind=function(e,t){var n=(0,u.getSensor)(e);return n.bind(t),function(){n.unbind(t)}},t.clear=function(e){var t=(0,u.getSensor)(e);(0,u.removeSensor)(t)}});e(c);var l=c.clear,d=c.bind,v=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){return window.setTimeout(e,1e3/60)},f=window.cancelAnimationFrame||window.webkitCancelAnimationFrame||window.mozCancelAnimationFrame||window.msCancelAnimationFrame||window.oCancelAnimationFrame||window.clearTimeout,m=function(e){return new Array(e).fill(0).map(function(e,t){return t})},h=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,n,o){return n&&e(t.prototype,n),o&&e(t,o),t}}();var y=function(){function e(t,n){var o=this;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.randomPoints=function(){return m(o.c.count).map(function(){return{x:Math.random()*o.canvas.width,y:Math.random()*o.canvas.height,xa:2*Math.random()-1,ya:2*Math.random()-1,max:6e3}})},this.el=t,this.c=h({zIndex:-1,opacity:.5,color:"0,0,0",pointColor:"0,0,0",count:99},n),this.canvas=this.newCanvas(),this.context=this.canvas.getContext("2d"),this.points=this.randomPoints(),this.current={x:null,y:null,max:2e4},this.all=this.points.concat([this.current]),this.bindEvent(),this.requestFrame(this.drawCanvas)}return p(e,[{key:"bindEvent",value:function(){var e=this;d(this.el,function(){e.canvas.width=e.el.clientWidth,e.canvas.height=e.el.clientHeight}),this.onmousemove=window.onmousemove,window.onmousemove=function(t){e.current.x=t.clientX-e.el.offsetLeft+document.scrollingElement.scrollLeft,e.current.y=t.clientY-e.el.offsetTop+document.scrollingElement.scrollTop,e.onmousemove&&e.onmousemove(t)},this.onmouseout=window.onmouseout,window.onmouseout=function(){e.current.x=null,e.current.y=null,e.onmouseout&&e.onmouseout()}}},{key:"newCanvas",value:function(){"static"===getComputedStyle(this.el).position&&(this.el.style.position="relative");var e,t=document.createElement("canvas");return t.style.cssText="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:"+(e=this.c).zIndex+";opacity:"+e.opacity,t.width=this.el.clientWidth,t.height=this.el.clientHeight,this.el.appendChild(t),t}},{key:"requestFrame",value:function(e){var t=this;this.tid=v(function(){return e.call(t)})}},{key:"drawCanvas",value:function(){var e=this,t=this.context,n=this.canvas.width,o=this.canvas.height,i=this.current,r=this.points,a=this.all;t.clearRect(0,0,n,o);var s=void 0,u=void 0,c=void 0,l=void 0,d=void 0,v=void 0;r.forEach(function(r,f){for(r.x+=r.xa,r.y+=r.ya,r.xa*=r.x>n||r.x<0?-1:1,r.ya*=r.y>o||r.y<0?-1:1,t.fillStyle="rgba("+e.c.pointColor+")",t.fillRect(r.x-.5,r.y-.5,1,1),u=f+1;u<a.length;u++)null!==(s=a[u]).x&&null!==s.y&&(l=r.x-s.x,d=r.y-s.y,(v=l*l+d*d)<s.max&&(s===i&&v>=s.max/2&&(r.x-=.03*l,r.y-=.03*d),c=(s.max-v)/s.max,t.beginPath(),t.lineWidth=c/2,t.strokeStyle="rgba("+e.c.color+","+(c+.2)+")",t.moveTo(r.x,r.y),t.lineTo(s.x,s.y),t.stroke()))}),this.requestFrame(this.drawCanvas)}},{key:"destroy",value:function(){l(this.el),window.onmousemove=this.onmousemove,window.onmouseout=this.onmouseout,f(this.tid),this.canvas.parentNode.removeChild(this.canvas)}}]),e}();y.version="2.0.4";var w,b;new y(document.body,(w=document.getElementsByTagName("script"),{zIndex:(b=w[w.length-1]).getAttribute("zIndex"),opacity:b.getAttribute("opacity"),color:b.getAttribute("color"),pointColor:b.getAttribute("pointColor"),count:Number(b.getAttribute("count"))||99}))}();
+</script>
+</html>
