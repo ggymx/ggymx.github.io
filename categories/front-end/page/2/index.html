@@ -163,6 +163,51 @@
     <header class="article-header">
         
         <h1 itemprop="name">
+            <a href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/">数据绑定之无法检测的数据更改</a>
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/categories/front-end/page/2/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2020-01-07T08:55:45.000Z" itemprop="datePublished">2020-01-07</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>Vue组件内是双向绑定，<mark>组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定）</mark>，但有三种情况下，更改组件内的数据不会自动刷新视图</p>
+<h4 id="1：Vue不能检测到已有对象属性的添加或删除"><a href="#1：Vue不能检测到已有对象属性的添加或删除" class="headerlink" title="1：Vue不能检测到已有对象属性的添加或删除"></a>1：Vue不能检测到已有对象属性的添加或删除</h4><p>错误写法：<code>this.$data.test.a=xxx</code></p>
+<p>正确写法：<code>vue.set(object,key,value)</code> 或 <code>Object.assign()</code></p>
+<p>示例：</p>
+        
+        <p class="article-more-link">
+            <a href="/2020/01/07/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E4%B9%8B%E6%97%A0%E6%B3%95%E6%A3%80%E6%B5%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%94%B9/#more">
+                <span class="vm">阅读更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
+        
+    </section>
+</article>
+
+
+    <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
             <a href="/2020/01/07/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/">编程范式</a>
         </h1>
         
