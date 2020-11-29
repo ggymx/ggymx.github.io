@@ -229,7 +229,7 @@
     <section class="article-body markdown-body">
         
         <p>Vue组件内是双向绑定，<mark>组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定）</mark>，但有三种情况下，更改组件内的数据不会自动刷新视图</p>
-<h4 id="1：Vue不能检测到已有对象属性的添加或删除"><a href="#1：Vue不能检测到已有对象属性的添加或删除" class="headerlink" title="1：Vue不能检测到已有对象属性的添加或删除"></a>1：Vue不能检测到已有对象属性的添加或删除</h4><p>错误写法：<code>this.$data.test.a=xxx</code></p>
+<h4 id="Vue不能检测到已有对象属性的添加或删除"><a href="#Vue不能检测到已有对象属性的添加或删除" class="headerlink" title="Vue不能检测到已有对象属性的添加或删除"></a>Vue不能检测到已有对象属性的添加或删除</h4><p>错误写法：<code>this.$data.test.a=xxx</code></p>
 <p>正确写法：<code>vue.set(object,key,value)</code> 或 <code>Object.assign()</code></p>
 <p>示例：</p>
         

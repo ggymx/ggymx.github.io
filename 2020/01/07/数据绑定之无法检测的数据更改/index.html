@@ -10,7 +10,7 @@
     <title>数据绑定之无法检测的数据更改 | 刚刚有梦想</title>
     <meta name="author" content="ggymx" />
     <meta name="keywords" content="" />
-    <meta name="description" content="Vue组件内是双向绑定，组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定），但有三种情况下，更改组件内的数据不会自动刷新视图1：Vue不能检测到已有对象属性的添加或删除错误写法：this.$data.test.a=xxx正确写法：vue.set(object,key,value) 或 Object.assign()示例：12345678910111213141516171819202122232425262728&amp;lt;script&amp;gt;  expor..." />
+    <meta name="description" content="Vue组件内是双向绑定，组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定），但有三种情况下，更改组件内的数据不会自动刷新视图Vue不能检测到已有对象属性的添加或删除错误写法：this.$data.test.a=xxx正确写法：vue.set(object,key,value) 或 Object.assign()示例：12345678910111213141516171819202122232425262728&amp;lt;script&amp;gt;  export ..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -105,7 +105,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1：Vue不能检测到已有对象属性的添加或删除"><span class="toc-number">1.</span> <span class="toc-text">1：Vue不能检测到已有对象属性的添加或删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2：通过改动两种方式改动数组时，Vue检测不到变动"><span class="toc-number">2.</span> <span class="toc-text">2：通过改动两种方式改动数组时，Vue检测不到变动</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-利用索引直接设置一个项"><span class="toc-number">2.1.</span> <span class="toc-text">1.利用索引直接设置一个项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-修改数组长度"><span class="toc-number">2.2.</span> <span class="toc-text">2.修改数组长度</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue不能检测到已有对象属性的添加或删除"><span class="toc-number">1.</span> <span class="toc-text">Vue不能检测到已有对象属性的添加或删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过改动两种方式改动数组时，Vue检测不到变动"><span class="toc-number">2.</span> <span class="toc-text">通过改动两种方式改动数组时，Vue检测不到变动</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#利用索引直接设置一个项"><span class="toc-number">2.1.</span> <span class="toc-text">利用索引直接设置一个项</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#修改数组长度"><span class="toc-number">2.2.</span> <span class="toc-text">修改数组长度</span></a></li></ol></li></ol>
         
     </div>
 </aside>
@@ -143,7 +143,7 @@
     <section class="article-body markdown-body">
         
         <p>Vue组件内是双向绑定，<mark>组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定）</mark>，但有三种情况下，更改组件内的数据不会自动刷新视图</p>
-<h4 id="1：Vue不能检测到已有对象属性的添加或删除"><a href="#1：Vue不能检测到已有对象属性的添加或删除" class="headerlink" title="1：Vue不能检测到已有对象属性的添加或删除"></a>1：Vue不能检测到已有对象属性的添加或删除</h4><p>错误写法：<code>this.$data.test.a=xxx</code></p>
+<h4 id="Vue不能检测到已有对象属性的添加或删除"><a href="#Vue不能检测到已有对象属性的添加或删除" class="headerlink" title="Vue不能检测到已有对象属性的添加或删除"></a>Vue不能检测到已有对象属性的添加或删除</h4><p>错误写法：<code>this.$data.test.a=xxx</code></p>
 <p>正确写法：<code>vue.set(object,key,value)</code> 或 <code>Object.assign()</code></p>
 <p>示例：</p>
 <a id="more"></a>
@@ -152,7 +152,7 @@
 
 <p>如：<br> <code>1. this.$set(this.test,’a’,xxx)</code> 或 <code>Vue.set(this.test,’a’,xxx)</code></p>
 <p> <code>2. this.test=Object.assign({},this.test,{a:xxx})</code></p>
-<h4 id="2：通过改动两种方式改动数组时，Vue检测不到变动"><a href="#2：通过改动两种方式改动数组时，Vue检测不到变动" class="headerlink" title="2：通过改动两种方式改动数组时，Vue检测不到变动"></a>2：通过改动两种方式改动数组时，Vue检测不到变动</h4><h5 id="1-利用索引直接设置一个项"><a href="#1-利用索引直接设置一个项" class="headerlink" title="1.利用索引直接设置一个项"></a>1.利用索引直接设置一个项</h5><h5 id="2-修改数组长度"><a href="#2-修改数组长度" class="headerlink" title="2.修改数组长度"></a>2.修改数组长度</h5><p>2.1 <mark>利用索引直接设置一个项，不能直接触发状态更新。</mark></p>
+<h4 id="通过改动两种方式改动数组时，Vue检测不到变动"><a href="#通过改动两种方式改动数组时，Vue检测不到变动" class="headerlink" title="通过改动两种方式改动数组时，Vue检测不到变动"></a>通过改动两种方式改动数组时，Vue检测不到变动</h4><h5 id="利用索引直接设置一个项"><a href="#利用索引直接设置一个项" class="headerlink" title="利用索引直接设置一个项"></a>利用索引直接设置一个项</h5><h5 id="修改数组长度"><a href="#修改数组长度" class="headerlink" title="修改数组长度"></a>修改数组长度</h5><p>2.1 <mark>利用索引直接设置一个项，不能直接触发状态更新。</mark></p>
 <p>错误写法：<code>this.trees[idx]=’x’</code></p>
 <p>正确写法：<code>this.$set(this.trees,idx,’x’)</code> 或 <code>this.trees.splice(idx,1,’x’)</code></p>
 <p>2.2 <mark>改变数组长度</mark></p>
@@ -173,6 +173,7 @@
 <hr>
 <p>拓展：<br>可以直接引起视图刷新的赋值的js的API（对data中已存在的属性而言）<br>push：数据尾插入<br>pop：尾删除<br>unshift：头插入<br>shift：头删除<br>splice：插入并删除<br>…<br>这些js的api会操作调用它的对象，会直接修改原数据，vue默认对它们进行了特殊处理。调用这些api会在内部调用数据的setter，从而引发视图刷新</p>
 <p>settter的工作流程<br><img src="http://tva1.sinaimg.cn/large/007gxmUjgy1ghsfactmnaj30jz0azab6.jpg" alt="image.png"></p>
+<p>总结：vue的检测数据更改，使用了订阅/发布模式，核心使用了Object.defineProperty，因此<mark>可以对对象的属性进行监听（但前提是该对象的属性要在data中进行声明，这样就能在组件初始化时使用使用Object.defineProperty对该属性进行set/get），虽然数组原型链最终指向Object，但无法继承该对象，因此对于数组的元素改变无法监听，但对于在data中声明的数组的里的对象的属性还是可以监听到的，因为数组里的对象仍然可以使用Object.defineProperty，对于不在data中声明的对象的属性或者数组，必须显示使用this.$set进行视图刷新，此外数组的变异方法，如splice，push，pop等也可以达到视图刷新的目的。</mark></p>
 <p>能否用watch实现对象和数组内属性的直接修改导致视图自动刷新？</p>
 <p>对象和数组内属性的直接修改不能刷新视图，是因为vue内监听数据的层级是一级，不会监听data中声明的数据里的数据，因此在watch中依然不行，如果是直接对data中数据进行赋值或者使用特定api，则没有必要使用watch。</p>
 <p>watch应用场景：假如v-model 输入框绑定一个变量a   可以输入改变变量a  另一个文本绑定变量b ，他俩不是一个变量 但是b又随着a变化而变化，这样的话就用到watch了</p>
