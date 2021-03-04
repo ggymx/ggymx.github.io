@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>taro框架学习笔记 | 刚刚有梦想</title>
+    <meta name="author" content="ggymx" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="taro 框架学习笔记总概述taro 暂不支持编译成 apptaro 可以使用 react/vue/nerv 开发cli 可以全局安装 也可以项目本地安装 优先使用项目本地 cli可以使用 react hooks 来创建函数组件 小程序生命周期一一对应需要引入 React 相关生态的库，直接通过 npm install 安装然后引入使用即可，Taro 不会再维护类似于 taro-redux 、taro-mobx 之类的库。使用 css modules 需要配置可以通过接..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    <link rel="alternate" href="/atom.xml" title="刚刚有梦想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/images/avatar.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">刚刚有梦想</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/other">
+                <span class="nav-text">其他</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/atom.xml">
+                <span class="nav-text">订阅</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#总概述"><span class="toc-number">1.</span> <span class="toc-text">总概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编译运行"><span class="toc-number">2.</span> <span class="toc-text">编译运行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#故障审查"><span class="toc-number">3.</span> <span class="toc-text">故障审查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全局配置"><span class="toc-number">4.</span> <span class="toc-text">全局配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用-slot-插槽"><span class="toc-number">5.</span> <span class="toc-text">使用 slot 插槽</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#页面"><span class="toc-number">6.</span> <span class="toc-text">页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#生命周期触发机制"><span class="toc-number">7.</span> <span class="toc-text">生命周期触发机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Taro-3-在小程序端的事件机制"><span class="toc-number">8.</span> <span class="toc-text">Taro 3 在小程序端的事件机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他限制"><span class="toc-number">9.</span> <span class="toc-text">其他限制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#默认配置"><span class="toc-number">10.</span> <span class="toc-text">默认配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计稿和尺寸"><span class="toc-number">11.</span> <span class="toc-text">设计稿和尺寸</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#资源引用"><span class="toc-number">12.</span> <span class="toc-text">资源引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨平台开发"><span class="toc-number">13.</span> <span class="toc-text">跨平台开发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jquery-like-api"><span class="toc-number">14.</span> <span class="toc-text">jquery-like api</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#性能优化"><span class="toc-number">15.</span> <span class="toc-text">性能优化</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            taro框架学习笔记
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/2021/03/04/taro%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2021-03-04T09:42:42.000Z" itemprop="datePublished">2021-03-04</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/taro/" rel="tag">taro</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>taro 框架学习笔记</p>
+<a id="more"></a>
+
+<h4 id="总概述"><a href="#总概述" class="headerlink" title="总概述"></a>总概述</h4><ul>
+<li>taro 暂不支持编译成 app</li>
+<li>taro 可以使用 react/vue/nerv 开发</li>
+<li>cli 可以全局安装 也可以项目本地安装 优先使用项目本地 cli</li>
+<li>可以使用 react hooks 来创建函数组件 小程序生命周期一一对应</li>
+<li><mark>需要引入 React 相关生态的库，直接通过 npm install 安装然后引入使用即可，Taro 不会再维护类似于 taro-redux 、taro-mobx 之类的库。</mark></li>
+<li>使用 css modules 需要配置</li>
+<li><mark>可以通过接入百度统计 sdk 来对小程序的访问信息进行统计</mark></li>
+<li>useMemo/useCallback 在依赖项没有改变时会使用缓存 等同于 computed???</li>
+<li>jsx:{}内可以使用 jsx 表达式，可以将任何 dom 结构当作值赋值给变量</li>
+</ul>
+<h4 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h4><p>npm run dev:weapp(weapp 是微信小程序)<br>打包<br>npm run build:weapp</p>
+<h4 id="故障审查"><a href="#故障审查" class="headerlink" title="故障审查"></a>故障审查</h4><p>taro doctor 可以诊断项目的依赖、设置、结构，以及代码的规范是否存在问题，并尝试给出解决方案。</p>
+<h4 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h4><p>app.config.js<br>配置规范基于微信小程序的全局配置进行制定，所有平台进行统一<br>app.config.js 里 require 或 import 引用的 js 文件目前没有经过 Babel 编译语法。<br>多端差异化逻辑可以使用 process.env.TARO_ENV 变量作条件判断以实现。<br>app.js 在入口组件中我们可以设置全局状态或访问小程序入口</p>
+<h4 id="使用-slot-插槽"><a href="#使用-slot-插槽" class="headerlink" title="使用 slot 插槽"></a>使用 slot 插槽</h4><p>react 需要导入后引用 Slot</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; View, Slot &#125; <span class="keyword">from</span> <span class="string">'@tarojs/components'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Index</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render () &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View&gt;</span><br><span class="line">        &lt;van-calendar poppable show&gt;</span><br><span class="line">          &lt;Slot name=<span class="string">'title'</span>&gt;</span><br><span class="line">            &lt;View&gt;Hello world&lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">          &lt;/</span>Slot&gt;</span><br><span class="line">        &lt;<span class="regexp">/van-calendar&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>View&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>vue 直接引用 slot-view</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">van-calendar</span> <span class="attr">:poppable</span>=<span class="string">'true'</span> <span class="attr">:show</span>=<span class="string">'true'</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">slot-view</span> <span class="attr">:name</span>=<span class="string">'"title"'</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">view</span>&gt;</span>Hello world<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">slot-view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">van-calendar</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="actionscript">  name: <span class="string">'index'</span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h4><p><mark>跳转：</mark><br>Taro.api…. 需要先导入 Taro<br>import Taro from ‘@tarojs/taro’<br>Taro 是按需加载 因此样式，Taro 组件 UI 组件 Taro 等都需要导入</p>
+<p><mark>传参：</mark><br>react onLaunch(options) /componentDidShow (options) 在此生命周期中通过访问 options 参数或调用 getCurrentInstance().router，可以访问到程序初始化参数。<br>onLaunch 是小程序的生命周期 componentDidShow 是 react 组件的生命周期</p>
+<p><mark>配置：</mark><br>对于每一个页面文件(例如 ./pages/index/index.jsx)，我们可以新增一个 ./pages/index/index.config.js 的文件进行页面配置，index.config.js 的默认导出就是页面配置。<br>配置文件必须命名为 index.config.js，且页面文件和配置文件必须同名</p>
+<h4 id="生命周期触发机制"><a href="#生命周期触发机制" class="headerlink" title="生命周期触发机制"></a>生命周期触发机制</h4><p>Taro 3 在小程序逻辑层上实现了一份遵循 Web 标准 BOM 和 DOM API。因此 React 使用的 document.appendChild、document.removeChild 等 API 其实是 Taro 模拟实现的，<br>最终的效果是把 React 的虚拟 DOM 树渲染为 Taro 模拟的 Web 标准 DOM 树。<br>因此在 Taro3 中，React 的生命周期触发时机和我们平常在 Web 开发中理解的概念有一些偏差。</p>
+<p><strong>componentDidMount()</strong><br>页面组件渲染到 Taro 的虚拟 DOM 之后触发。<br>此时<mark>能访问到 Taro 的虚拟 DOM</mark>（使用 React ref、document.getElementById 等手段），并支持对其进行操作（设置 DOM 的 style 等）。<br>但此时不代表 Taro 的虚拟 DOM 数据已经完成从逻辑层 setData 到视图层。因此<mark>这时无法通过 createSelectorQuery 等方法获取小程序渲染层 DOM 节点。 只能在 onReady 生命周期中获取。</mark></p>
+<p><strong>onReady()</strong><br>从此生命周期开始可以使用 createCanvasContext 或 createSelectorQuery 等 API 访问小程序渲染层的 DOM 节点。</p>
+<p>如子组件获取其小程序渲染层的 DOM 节点，必须在 onReady 之后才能访问，但只有页面组件才能触发 onReady，onShow 等小程序页面的生命周期，<br>所以可以在子组件中子组件可以使用 Taro 内置的消息机制监听页面组件的 onReady() 生命周期</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">componentWillMount () &#123;</span><br><span class="line">    <span class="keyword">const</span> onReadyEventId = <span class="keyword">this</span>.$instance.router.onReady</span><br><span class="line">    <span class="comment">//taro内置消息机制，onReady只会出发一次 因此用once</span></span><br><span class="line">    eventCenter.once(onReadyEventId, () =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'onReady'</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// onReady 触发后才能获取小程序渲染层的节点</span></span><br><span class="line">      Taro.createSelectorQuery().select(<span class="string">'#only'</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .exec(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">console</span>.log(res, <span class="string">'res'</span>))</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关闭时卸载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">componentWillUnmount () &#123;</span><br><span class="line">    <span class="keyword">const</span> onHideEventId = <span class="keyword">this</span>.$instance.router.onHide</span><br><span class="line">    <span class="comment">// 卸载</span></span><br><span class="line">    eventCenter.off(onHideEventId, <span class="keyword">this</span>.onHide)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是当子组件是按需加载的时候，页面 onReady 早已触发。如果此按需加载的子组件需要获取小程序渲染层的 DOM 节点，因为错过了页面 onReady，只能尝试使用 Taro.nextTick 模拟：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount () &#123;</span><br><span class="line">    Taro.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 使用 Taro.nextTick 模拟 setData 已结束，节点已完成渲染</span></span><br><span class="line">      Taro.createSelectorQuery().select(<span class="string">'#only'</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .exec(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">console</span>.log(res, <span class="string">'res'</span>))</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>onPullDownRefresh （下拉刷新），onReachBottom 等需要全局或页面配置中设置 onPullDownRefresh，可以通过 Taro.startPullDownRefresh 主动触发，由 Taro.stopPullDownRefresh 停止</p>
+<p>beforeDestroy() 只有在页面从页面栈中卸载时会触发 redirectTo 或 navigateBack</p>
+<h4 id="Taro-3-在小程序端的事件机制"><a href="#Taro-3-在小程序端的事件机制" class="headerlink" title="Taro 3 在小程序端的事件机制"></a>Taro 3 在小程序端的事件机制</h4><p>在 Taro 1 &amp; 2 中，Taro 会根据开发者是否使用了 e.stopPropagation()，来决定在小程序模板中绑定的事件是以 bind 还是以 catch 形式。因此事件冒泡是由小程序控制的。<br><mark>但是在 Taro 3，我们在小程序逻辑层实现了一套事件系统，包括事件触发和事件冒泡。在小程序模板中绑定的事件都是以 bind 的形式。</mark><br>一般情况下，这套在逻辑层实现的小程序事件系统是可以正常工作的，事件回调能正确触发、冒泡、停止冒泡。<br>但是，<mark>小程序模板中绑定的 catchtouchmove 事件除了可以阻止回调函数冒泡触发外，还能阻止视图的滚动穿透，这点 Taro 的事件系统是做不到的。</mark></p>
+<p><strong>阻止被穿透组件滚动</strong></p>
+<ol>
+<li>样式</li>
+<li>地图组件本身固定宽高也是可以滚动的，所以可以用原生 catchMove 阻止冒泡到地图上的滚动事件<br><code>&lt;View catchMove&gt;&lt;/View&gt;</code></li>
+</ol>
+<h4 id="其他限制"><a href="#其他限制" class="headerlink" title="其他限制"></a>其他限制</h4><p>react</p>
+<ul>
+<li><mark>由于小程序不支持动态引入，因此小程序中无法使用 React.lazy API。</mark></li>
+<li><mark>所有组件的 id 必须在整个应用中保持唯一（即使他们在不同的页面），否则可能导致事件不触发的问题</mark></li>
+</ul>
+<p>vue</p>
+<ul>
+<li><mark>由于小程序访问元素位置为异步 API，因此小程序中无法使用内置的 transition-group 组件。<br>小程序中不支持 <code>&lt;style scoped&gt;</code>，建议使用 cssModules 代替。</mark></li>
+<li>所有组件的 id 必须在整个应用中保持唯一（即使他们在不同的页面），否则可能导致事件不触发的问题</li>
+</ul>
+<h4 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h4><p>taro 默认已经添加了微信小程序的配置文件，其他平台需要自行配置</p>
+<h4 id="设计稿和尺寸"><a href="#设计稿和尺寸" class="headerlink" title="设计稿和尺寸"></a>设计稿和尺寸</h4><p>Taro 建议使用 px 和半分比%，Taro 会跟据平台对 px 按照 1：1 的方式进行转换，如<mark>100px 在微信小程序</mark>中就是 100rpx，在 H5 页面就是转换为 rem，<mark>若希望部分 px 不进行转换。则写成 Px/PX 即可</mark><br><mark>Tarp 默认以 750px 作为换算尺寸标准</mark>，如果设计稿不是以 750px 为标准，则需要在项目配置 config/index.js 中进行设置，例如设计稿尺寸是 640px，则需要修改项目配置 config/index.js 中的 designWidth<br>目前 Taro 支持 750、 640 、 828 三种尺寸设计稿，若是其他尺寸，则需要在<code>DEVICE_RATIO</code>中添加换算规则</p>
+<h4 id="资源引用"><a href="#资源引用" class="headerlink" title="资源引用"></a>资源引用</h4><p>静态资源引用<br><mark>css js 图片 音频 json 文件等都可以通过 es6 的 import 直接引入，然后再 jsx 中使用它的引用</mark></p>
+<p>小程序样式中引用本地资源<br><mark>在小程序的样式中，默认不能直接引用本地资源，只能通过网络地址、Base64 的方式来进行资源引用，为了方便开发，Taro 提供了直接在样式文件中引用本地资源的方式</mark>，其原理是通过 PostCSS 的 postcss-url 插件将样式中本地资源引用转换成 Base64 格式，<br>从而能正常加载。Taro 默认会对 1kb 大小以下的资源进行转换，如果需要修改配置，可以在 config/index.js 中进行修改，配置位于 weapp.module.postcss。</p>
+<h4 id="跨平台开发"><a href="#跨平台开发" class="headerlink" title="跨平台开发"></a>跨平台开发</h4><p>可以使用内置的环境变量做区分，也可以编写统一接口的多端文件，node_modules 和 page 数组也可以根据平台做端处理</p>
+<p>test.h5.js test 组件的 h5 版本，test.js 其他版本<br>使用时不用带端类型 taro 编译时会自动识别</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Test <span class="keyword">from</span> <span class="string">'../../components/test'</span>   直接引入，不用带端类型后缀</span><br><span class="line">&lt;Test argA=&#123;<span class="number">1</span>&#125; argA=&#123;<span class="number">2</span>&#125; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>根据端不同编译到不同的目录<br>/config/index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputRoot: <span class="string">`dist/<span class="subst">$&#123;process.env.TARO_ENV&#125;</span>`</span></span><br></pre></td></tr></table></figure>
+
+<p><mark>taro 支持拓展命令行，拓展编译平台</mark></p>
+<h4 id="jquery-like-api"><a href="#jquery-like-api" class="headerlink" title="jquery-like api"></a>jquery-like api</h4><p>taro 中具有类似 jquery 一样显式操作 DOM 的 api，需要先通过 npm 安装依赖包<br><code>npm i @tarojs/extend</code><br>然后所需文件引入即可<br>import { $ } from ‘@tarojs/extend’</p>
+<h4 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h4><p><strong>prerender</strong><br>预渲染 prerender 可以使用预渲染来提前加载一些复杂的页面或者组件，达到页面显示减少等待时间，prerender 可以自定义渲染，可以禁用某个页面或组件渲染，<mark>prerender 会增加打包体积，<br>是一种以空间换时间的做法</mark><br>Prerender 不会执行例如 componentDidMount()(React)/ready()(Vue) 这样的生命周期，这点和服务端渲染一致。<br>如果有处理数据的需求，可以把生命周期提前到 static getDerivedStateFromProps()(React) 或 created()(Vue)。</p>
+<p><strong>首屏加载</strong><br>可以通过页面内判断只在页面刚加载时显示部分组件（首屏），达到页面更快渲染的目的，这种方式没有用到 prerender<br>可以降低 prerender 的所增加的 wxml 体积。（当你的优化做得足够彻底时，你会发现多数情况下并不需要 Prerender）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomePage</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    mounted: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount () &#123;</span><br><span class="line">    <span class="comment">// 等待组件载入，先渲染了首屏我们再渲染其它内容，降低首次渲染的数据量</span></span><br><span class="line">    <span class="comment">// 当 mounted 为 true 时，CompA, B, C 的 DOM 树才会作为 data 参与小程序渲染</span></span><br><span class="line">    <span class="comment">// 注意我们需要在 `componentDidMount()` 这个周期做这件事（对应 Vue 的 `ready()`），更早的生命周期 `setState()` 会与首次渲染的数据一起合并更新</span></span><br><span class="line">    <span class="comment">// 使用 nextTick 确保本次 setState 不会和首次渲染合并更新</span></span><br><span class="line">    Taro.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        mounted: <span class="literal">true</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">View</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">FirstScreen</span> /&gt;</span> /* 假设我们知道这个组件会把用户的屏幕全部占据 */</span></span><br><span class="line">      &#123;this.state.mounted &amp;&amp; &lt;React.Fragment&gt; /* CompA, B, C 一开始并不会在首屏中显示 */</span><br><span class="line">        &lt;CompA /&gt;</span><br><span class="line">        &lt;CompB /&gt;</span><br><span class="line">        &lt;CompC /&gt;</span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">React.Fragment</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>长列表渲染懒加载</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildData</span> (<span class="params">offset = <span class="number">0</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>(<span class="number">100</span>).fill(<span class="number">0</span>).map(<span class="function">(<span class="params">_, i</span>) =&gt;</span> i + offset);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Row = React.memo(<span class="function">(<span class="params">&#123; id, index, style, data &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;View id=&#123;id&#125; className=&#123;index % <span class="number">2</span> ? <span class="string">'ListItemOdd'</span> : <span class="string">'ListItemEven'</span>&#125; style=&#123;style&#125;&gt;</span><br><span class="line">      Row &#123;index&#125; : &#123;data[index]&#125;</span><br><span class="line">    &lt;<span class="regexp">/View&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default class Index extends Component &#123;</span></span><br><span class="line"><span class="regexp">  state = &#123;</span></span><br><span class="line"><span class="regexp">    data: buildData(0),</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  render() &#123;</span></span><br><span class="line"><span class="regexp">    const &#123; data &#125; = this.state</span></span><br><span class="line"><span class="regexp">    const dataLen = data.length</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;VirtualList</span></span><br><span class="line"><span class="regexp">        height=&#123;500&#125; /</span>* 列表的高度 *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">        width='100%' /</span>* 列表的宽度 *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">        itemData=&#123;data&#125; /</span>* 渲染列表的数据 *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">        itemCount=&#123;dataLen&#125; /</span>*  渲染列表的长度 *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">        itemSize=&#123;100&#125; /</span>* 列表单项的高度  *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">      &gt;</span></span><br><span class="line"><span class="regexp">        &#123;Row&#125; /</span>* 列表单项组件，这里只能传入一个组件 *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">      &lt;/</span>VirtualList&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2020/11/29/%E7%99%BE%E5%BA%A6OCR%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%BA%94%E7%94%A8/" class="article-next" title="百度OCR的实例应用"><i class="icon-arrow-right"></i></a>
+
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "7fbe80427f54741e289f",
+        clientSecret: "f34ed5fd92e54c9000bd37ba951948cb939deff5",
+        repo: "sanonz.github.io",
+        owner: "sanonz",
+        admin: ["sanonz"],
+        id: "2021/03/04/taro框架学习笔记",
+        distractionFreeMode: true,
+        title: "taro框架学习笔记",
+        body: "http://yoursite.com/2021/03/04/taro%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/",
+        labels: ["taro"]
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e4027971a230b210f4671f485b33846a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+
+<!--添加的自定义特效-->
+<!--点击爱心特效-->
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤不做咸鱼！❤","❤拒绝懒惰！❤","❤想做吃货❤","❤拒绝单身❤","❤向大佬学习❤","❤扶我起来~❤","❤come on❤","❤一直在路上~❤","❤累了~❤","❤再趴一会❤","❤66666❤","❤高兴的飞起*****❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+<!--背景特效-->
+<script type="text/javascript" color="112,128,144" opacity="0.7" zIndex="-2" count="99">
+!function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}function t(e,t){return e(t={exports:{}},t.exports),t.exports}var n=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});var n=1;t.default=function(){return""+n++},e.exports=t.default});e(n);var o=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:30,n=null;return function(){for(var o=this,i=arguments.length,r=Array(i),a=0;a<i;a++)r[a]=arguments[a];clearTimeout(n),n=setTimeout(function(){e.apply(o,r)},t)}},e.exports=t.default});e(o);var i=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});t.SizeSensorId="size-sensor-id",t.SensorStyle="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1;opacity:0",t.SensorClassName="size-sensor-object"});e(i);i.SizeSensorId,i.SensorStyle,i.SensorClassName;var r=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,r=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,r.default)(function(){n.forEach(function(t){t(e)})}),a=function(){t&&t.parentNode&&(t.contentDocument.defaultView.removeEventListener("resize",o),t.parentNode.removeChild(t),t=void 0,n=[])};return{element:e,bind:function(r){t||(t=function(){"static"===getComputedStyle(e).position&&(e.style.position="relative");var t=document.createElement("object");return t.onload=function(){t.contentDocument.defaultView.addEventListener("resize",o),o()},t.setAttribute("style",i.SensorStyle),t.setAttribute("class",i.SensorClassName),t.type="text/html",e.appendChild(t),t.data="about:blank",t}()),-1===n.indexOf(r)&&n.push(r)},destroy:a,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&a()}}}});e(r);r.createSensor;var a=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,i=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,i.default)(function(){n.forEach(function(t){t(e)})}),r=function(){t.disconnect(),n=[],t=void 0};return{element:e,bind:function(i){t||(t=function(){var t=new ResizeObserver(o);return t.observe(e),o(),t}()),-1===n.indexOf(i)&&n.push(i)},destroy:r,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&r()}}}});e(a);a.createSensor;var s=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;t.createSensor="undefined"!=typeof ResizeObserver?a.createSensor:r.createSensor});e(s);s.createSensor;var u=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.removeSensor=t.getSensor=void 0;var o,r=(o=n)&&o.__esModule?o:{default:o};var a={};t.getSensor=function(e){var t=e.getAttribute(i.SizeSensorId);if(t&&a[t])return a[t];var n=(0,r.default)();e.setAttribute(i.SizeSensorId,n);var o=(0,s.createSensor)(e);return a[n]=o,o},t.removeSensor=function(e){var t=e.element.getAttribute(i.SizeSensorId);e.element.removeAttribute(i.SizeSensorId),e.destroy(),t&&a[t]&&delete a[t]}});e(u);u.removeSensor,u.getSensor;var c=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.clear=t.bind=void 0;t.bind=function(e,t){var n=(0,u.getSensor)(e);return n.bind(t),function(){n.unbind(t)}},t.clear=function(e){var t=(0,u.getSensor)(e);(0,u.removeSensor)(t)}});e(c);var l=c.clear,d=c.bind,v=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){return window.setTimeout(e,1e3/60)},f=window.cancelAnimationFrame||window.webkitCancelAnimationFrame||window.mozCancelAnimationFrame||window.msCancelAnimationFrame||window.oCancelAnimationFrame||window.clearTimeout,m=function(e){return new Array(e).fill(0).map(function(e,t){return t})},h=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,n,o){return n&&e(t.prototype,n),o&&e(t,o),t}}();var y=function(){function e(t,n){var o=this;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.randomPoints=function(){return m(o.c.count).map(function(){return{x:Math.random()*o.canvas.width,y:Math.random()*o.canvas.height,xa:2*Math.random()-1,ya:2*Math.random()-1,max:6e3}})},this.el=t,this.c=h({zIndex:-1,opacity:.5,color:"0,0,0",pointColor:"0,0,0",count:99},n),this.canvas=this.newCanvas(),this.context=this.canvas.getContext("2d"),this.points=this.randomPoints(),this.current={x:null,y:null,max:2e4},this.all=this.points.concat([this.current]),this.bindEvent(),this.requestFrame(this.drawCanvas)}return p(e,[{key:"bindEvent",value:function(){var e=this;d(this.el,function(){e.canvas.width=e.el.clientWidth,e.canvas.height=e.el.clientHeight}),this.onmousemove=window.onmousemove,window.onmousemove=function(t){e.current.x=t.clientX-e.el.offsetLeft+document.scrollingElement.scrollLeft,e.current.y=t.clientY-e.el.offsetTop+document.scrollingElement.scrollTop,e.onmousemove&&e.onmousemove(t)},this.onmouseout=window.onmouseout,window.onmouseout=function(){e.current.x=null,e.current.y=null,e.onmouseout&&e.onmouseout()}}},{key:"newCanvas",value:function(){"static"===getComputedStyle(this.el).position&&(this.el.style.position="relative");var e,t=document.createElement("canvas");return t.style.cssText="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:"+(e=this.c).zIndex+";opacity:"+e.opacity,t.width=this.el.clientWidth,t.height=this.el.clientHeight,this.el.appendChild(t),t}},{key:"requestFrame",value:function(e){var t=this;this.tid=v(function(){return e.call(t)})}},{key:"drawCanvas",value:function(){var e=this,t=this.context,n=this.canvas.width,o=this.canvas.height,i=this.current,r=this.points,a=this.all;t.clearRect(0,0,n,o);var s=void 0,u=void 0,c=void 0,l=void 0,d=void 0,v=void 0;r.forEach(function(r,f){for(r.x+=r.xa,r.y+=r.ya,r.xa*=r.x>n||r.x<0?-1:1,r.ya*=r.y>o||r.y<0?-1:1,t.fillStyle="rgba("+e.c.pointColor+")",t.fillRect(r.x-.5,r.y-.5,1,1),u=f+1;u<a.length;u++)null!==(s=a[u]).x&&null!==s.y&&(l=r.x-s.x,d=r.y-s.y,(v=l*l+d*d)<s.max&&(s===i&&v>=s.max/2&&(r.x-=.03*l,r.y-=.03*d),c=(s.max-v)/s.max,t.beginPath(),t.lineWidth=c/2,t.strokeStyle="rgba("+e.c.color+","+(c+.2)+")",t.moveTo(r.x,r.y),t.lineTo(s.x,s.y),t.stroke()))}),this.requestFrame(this.drawCanvas)}},{key:"destroy",value:function(){l(this.el),window.onmousemove=this.onmousemove,window.onmouseout=this.onmouseout,f(this.tid),this.canvas.parentNode.removeChild(this.canvas)}}]),e}();y.version="2.0.4";var w,b;new y(document.body,(w=document.getElementsByTagName("script"),{zIndex:(b=w[w.length-1]).getAttribute("zIndex"),opacity:b.getAttribute("opacity"),color:b.getAttribute("color"),pointColor:b.getAttribute("pointColor"),count:Number(b.getAttribute("count"))||99}))}();
+</script>
+</html>
