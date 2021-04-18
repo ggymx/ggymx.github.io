@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+
+    
+
+    
+
+    <title>vue3.x学习笔记 | 刚刚有梦想</title>
+    <meta name="author" content="ggymx" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="vue3.x前瞻学习vue3.x相对比v2.x的不同不再支持组件data定义为对象以下写法3.x不再支持12345export default &amp;#123;  data:&amp;#123;      &amp;#125;&amp;#125;attribute取值约束调整将非props的attribute的取值对实际attribute的影响做了更加合理的判定将$listener合并入了$attrs中异步组件显式定义对异步组件的定义做了调整，需要引入defineAsyncComponent显式定义异步..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+    
+    <link rel="alternate" href="/atom.xml" title="刚刚有梦想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/images/avatar.ico">
+    
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url("/fonts/icomoon.eot?q628ml");
+        src: url("/fonts/icomoon.eot?q628ml#iefix") format('embedded-opentype'),
+             url("/fonts/icomoon.ttf?q628ml") format('truetype'),
+             url("/fonts/icomoon.woff?q628ml") format('woff'),
+             url("/fonts/icomoon.svg?q628ml#icomoon") format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    </style>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!--[if lt IE 9]>
+    <style type="text/css">
+    .nav-inner {top:0;}
+    .author-meta {position:static;top:0;}
+    .search-form {height:36px;}
+    </style>
+    <script type="text/javascript" src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+
+    <main class="app">
+        <header id="header" class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">刚刚有梦想</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/front-end">
+                <span class="nav-text">前端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/back-end">
+                <span class="nav-text">后端</span>
+            </a>
+        
+            <a class="nav-item" href="/categories/other">
+                <span class="nav-text">其他</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">归档</span>
+            </a>
+        
+            <a class="nav-item" href="/atom.xml">
+                <span class="nav-text">订阅</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#不再支持组件data定义为对象"><span class="toc-number">1.</span> <span class="toc-text">不再支持组件data定义为对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#attribute取值约束调整"><span class="toc-number">2.</span> <span class="toc-text">attribute取值约束调整</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将-listener合并入了-attrs中"><span class="toc-number">3.</span> <span class="toc-text">将$listener合并入了$attrs中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#异步组件显式定义"><span class="toc-number">4.</span> <span class="toc-text">异步组件显式定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mixin合并行为变更"><span class="toc-number">5.</span> <span class="toc-text">Mixin合并行为变更</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#废弃filter"><span class="toc-number">6.</span> <span class="toc-text">废弃filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#增加片段概念"><span class="toc-number">7.</span> <span class="toc-text">增加片段概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#template组件的性能提升"><span class="toc-number">8.</span> <span class="toc-text">template组件的性能提升</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无法再默认实现eventBus"><span class="toc-number">9.</span> <span class="toc-text">无法再默认实现eventBus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义指令生命周期方法命名更新"><span class="toc-number">10.</span> <span class="toc-text">自定义指令生命周期方法命名更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全局配置迁移"><span class="toc-number">11.</span> <span class="toc-text">全局配置迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Vue全局配置的全局API迁移"><span class="toc-number">11.1.</span> <span class="toc-text">Vue全局配置的全局API迁移</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全局API-tree-shaking"><span class="toc-number">11.2.</span> <span class="toc-text">全局API tree shaking</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#按键修饰符废除keyCode支持"><span class="toc-number">12.</span> <span class="toc-text">按键修饰符废除keyCode支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-model更新"><span class="toc-number">13.</span> <span class="toc-text">v-model更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-if和v-for优先级更改"><span class="toc-number">14.</span> <span class="toc-text">v-if和v-for优先级更改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改v-bind合并行为"><span class="toc-number">15.</span> <span class="toc-text">更改v-bind合并行为</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content">
+            <div id="wrapper" class="wrapper" style="max-width: 800px">
+                <article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            vue3.x学习笔记
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/2021/03/20/vue3-x%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2021-03-20T15:25:46.000Z" itemprop="datePublished">2021-03-20</time>
+</a>
+
+            
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>vue3.x前瞻学习</p>
+<a id="more"></a>
+<p>vue3.x相对比v2.x的不同</p>
+<h4 id="不再支持组件data定义为对象"><a href="#不再支持组件data定义为对象" class="headerlink" title="不再支持组件data定义为对象"></a>不再支持组件data定义为对象</h4><p>以下写法3.x不再支持</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data:&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="attribute取值约束调整"><a href="#attribute取值约束调整" class="headerlink" title="attribute取值约束调整"></a>attribute取值约束调整</h4><p>将非props的attribute的取值对实际attribute的影响做了更加合理的判定</p>
+<h4 id="将-listener合并入了-attrs中"><a href="#将-listener合并入了-attrs中" class="headerlink" title="将$listener合并入了$attrs中"></a><mark>将<code>$listener</code>合并入了<code>$attrs</code>中</mark></h4><h4 id="异步组件显式定义"><a href="#异步组件显式定义" class="headerlink" title="异步组件显式定义"></a>异步组件显式定义</h4><p>对异步组件的定义做了调整，需要引入<code>defineAsyncComponent</code>显式定义异步组件</p>
+<h4 id="Mixin合并行为变更"><a href="#Mixin合并行为变更" class="headerlink" title="Mixin合并行为变更"></a>Mixin合并行为变更</h4><p>minxin引入组件时不会自动引入组件未定义的变量，因为3.x认为组件未定义的说明不需要<br>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Mixin = &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      user: &#123;</span><br><span class="line">        name: <span class="string">'Jack'</span>,</span><br><span class="line">        id: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> CompA = &#123;</span><br><span class="line">  mixins: [Mixin],</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      user: &#123;</span><br><span class="line">        id: <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Vue 2.x中，生成的 $data 是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user: &#123;</span><br><span class="line">    id: <span class="number">2</span>,</span><br><span class="line">    name: <span class="string">'Jack'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.x是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user: &#123;</span><br><span class="line">    id: <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="废弃filter"><a href="#废弃filter" class="headerlink" title="废弃filter"></a>废弃filter</h4><p>废弃原因：<br>虽然这看起来很方便，但它需要一个自定义语法，打破大括号内表达式是“只是 JavaScript”的假设，这不仅有学习成本，而且有实现成本</p>
+<p><mark>完全废除filter</mark>，替换方案是用计算属性或函数，全局filter定义可以替换为全局prop定义</p>
+<h4 id="增加片段概念"><a href="#增加片段概念" class="headerlink" title="增加片段概念"></a>增加片段概念</h4><p><mark>增加了片段的概念，即组件支持返回多个节点</mark></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">   ...</span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>对片段类型组件的attr绑定可以使用v-bind=”$attrs”</p>
+<h4 id="template组件的性能提升"><a href="#template组件的性能提升" class="headerlink" title="template组件的性能提升"></a>template组件的性能提升</h4><p>vue2.x中的函数组件的渲染速度比template组件要快，因此无状态的简单组件可以使用函数组件<br>  而3.x的template的组件的性能优化已经和函数组件相差无几，因此函数组件的优势仅仅只剩定义简单组件</p>
+<h4 id="无法再默认实现eventBus"><a href="#无法再默认实现eventBus" class="headerlink" title="无法再默认实现eventBus"></a>无法再默认实现eventBus</h4><p>$on，$off 和 $once 实例方法已被移除，应用实例不再实现事件触发接口。<br>  即vue实例已经废弃了这三个方法，即通过创建 event hub，以创建在整个应用程序中使用的全局事件侦听器已经行不通了，即<mark>3.x无法再利用vue的这些特性去创建一个enevtBus(事件总线)&gt;</mark><br>  需要使用eventBus可以显式引入实现事件发射器接口的外部库：如<a href="https://github.com/developit/mitt" target="_blank" rel="noopener">mitt</a></p>
+<h4 id="自定义指令生命周期方法命名更新"><a href="#自定义指令生命周期方法命名更新" class="headerlink" title="自定义指令生命周期方法命名更新"></a>自定义指令生命周期方法命名更新</h4><p>将自定义指令的生命周期方法的命名更新和组件生命周期方法近似一致，减少记忆成本<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqt9888zfj30r409775j.jpg" alt="QQ截图20210320235253.png"></p>
+<h4 id="全局配置迁移"><a href="#全局配置迁移" class="headerlink" title="全局配置迁移"></a>全局配置迁移</h4><h5 id="Vue全局配置的全局API迁移"><a href="#Vue全局配置的全局API迁移" class="headerlink" title="Vue全局配置的全局API迁移"></a>Vue全局配置的全局API迁移</h5><p>3.x中全局配置的API由Vue迁移到createApp返回的vue实例上<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqtgivb4gj30qv0dcdh0.jpg" alt="QQ截图20210321000421.png"><br>迁移理由：<br>2.x中Vue的全局配置会影响所有的vue实例，会强制污染一些不想有此配置的vue实例，如测试时定义的vue实例也会受到此全局配置的影响，因此对测试也带来了麻烦</p>
+<h5 id="全局API-tree-shaking"><a href="#全局API-tree-shaking" class="headerlink" title="全局API tree shaking"></a>全局API tree shaking</h5><p><mark>3.x中实现了非全局配置的全局API按需引入，有利于编译器编译时tree-shaking（性能优化）</mark></p>
+<p>示例：<br>2.x的nextTick使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">Vue.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 一些和DOM有关的东西</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Vue.nextTick() 是一个全局的 API 直接暴露在单个 Vue 对象上——事实上，实例方法 $nextTick() 只是一个方便的包装 Vue.nextTick() 为方便起见，回调的 this 上下文自动绑定到当前实例。</p>
+<p>模块捆绑程序，如 webpack 支持 tree-shaking，这是“死代码消除”的一个花哨术语。不幸的是，由于代码是如何在以前的 Vue 版本中编写的，全局 API Vue.nextTick() 不可摇动，将包含在最终捆绑中不管它们实际在哪里使用</p>
+<p>3.x nextTick的使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//按需引入，有利于tree-shaking</span></span><br><span class="line"><span class="keyword">import</span> &#123; nextTick &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 一些和DOM有关的东西</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在 Vue 3 中，全局和内部 API 都经过了重构，并考虑到了 tree-shaking 的支持。因此，<mark>全局 API 现在只能作为 ES 模块构建的命名导出进行访问。</mark></p>
+<p>受影响的api:<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqtvh03yvj30gn0aa74q.jpg" alt="QQ截图20210321001843.png"></p>
+<h4 id="按键修饰符废除keyCode支持"><a href="#按键修饰符废除keyCode支持" class="headerlink" title="按键修饰符废除keyCode支持"></a>按键修饰符废除keyCode支持</h4><p>非兼容：不再支持使用数字 (即键码) 作为 v-on 修饰符<br>非兼容：不再支持 config.keyCodes<br>键码修饰符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 键码版本 --&gt;</span><br><span class="line">&lt;input v-on:keyup<span class="number">.13</span>=<span class="string">"submit"</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>自定义键码配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.keyCodes = &#123;</span><br><span class="line">  f1: <span class="number">112</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.x不再支持以上做法：<br>强制使用：别名版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 别名版本 --&gt;</span><br><span class="line">&lt;input v-on:keyup.enter=<span class="string">"submit"</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>从KeyboardEvent.keyCode has been deprecated 开始，Vue 3 继续支持这一点就不再有意义了。因此，现在建议对任何要用作修饰符的键使用 kebab-cased (短横线) 大小写名称。</p>
+<h4 id="v-model更新"><a href="#v-model更新" class="headerlink" title="v-model更新"></a>v-model更新</h4><p>就变化内容而言，此部分属于高阶内容：</p>
+<p>非兼容：用于自定义组件时，v-model prop 和事件默认名称已更改：<br>prop：value -&gt; modelValue；<br>event：input -&gt; update:modelValue；<br>非兼容：<mark>v-bind 的 .sync 修饰符和组件的 model 选项已移除，可用 v-model 作为代替；&lt;/mark<br>新增：现在可以在同一个组件上使用多个 v-model 进行双向绑定；<br>新增：<mark>现在可以自定义 v-model 修饰符。</mark></p>
+<p><mark>在 Vue 3 中，双向数据绑定的 API 已经标准化</mark>，减少了开发者在使用 v-model 指令时的混淆并且在使用 v-model 指令时可以更加灵活。</p>
+<p>示例：移除3.xsync修饰符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ChildComponent :title.sync=<span class="string">"pageTitle"</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3.x支持组件使用多个v-model</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ChildComponent</span> <span class="attr">v-model:title</span>=<span class="string">"pageTitle"</span> <span class="attr">v-model:content</span>=<span class="string">"pageContent"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 全写： --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ChildComponent</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:title</span>=<span class="string">"pageTitle"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">update:title</span>=<span class="string">"pageTitle = $event"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:content</span>=<span class="string">"pageContent"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">update:content</span>=<span class="string">"pageContent = $event"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="v-if和v-for优先级更改"><a href="#v-if和v-for优先级更改" class="headerlink" title="v-if和v-for优先级更改"></a>v-if和v-for优先级更改</h4><p>优先级：<br>v2.x：v-for&gt;v-if<br>v3.x：v-if&gt;v-for</p>
+<p>由于语法上存在歧义，<mark>建议避免在同一元素上同时使用两者。</mark></p>
+<p><mark>比起在模板层面管理相关逻辑，更好的办法是通过创建计算属性筛选出列表，并以此创建可见元素。</mark></p>
+<h4 id="更改v-bind合并行为"><a href="#更改v-bind合并行为" class="headerlink" title="更改v-bind合并行为"></a>更改v-bind合并行为</h4><p>不兼容：v-bind 的绑定顺序会影响渲染结果。</p>
+<p>在元素上动态绑定 attribute 时，常见的场景是在一个元素中同时使用 v-bind=”object” 语法和单独的 property。然而，这就引出了关于合并的优先级的问题。<br>在 2.x，如果一个元素同时定义了 v-bind=”object” 和一个相同的单独的 property，那么这个单独的 property 总是会覆盖 object 中的绑定。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- template --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"red"</span> <span class="attr">v-bind</span>=<span class="string">"&#123; id: 'blue' &#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- result --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"red"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 3.x，如果一个元素同时定义了 v-bind=”object” 和一个相同的单独的 property，那么<mark>声明绑定的顺序决定了它们如何合并</mark>（开发者对自己所希望的合并行为有了更好的控制。）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- template --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"red"</span> <span class="attr">v-bind</span>=<span class="string">"&#123; id: 'blue' &#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- result --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"blue"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- template --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind</span>=<span class="string">"&#123; id: 'blue' &#125;"</span> <span class="attr">id</span>=<span class="string">"red"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- result --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"red"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+        
+    </section>
+</article>
+
+
+
+<a id="pagenext" href="/2021/03/17/redux%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-next" title="redux学习笔记"><i class="icon-arrow-right"></i></a>
+
+
+<a id="pageprev" href="/2021/03/25/%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" class="article-prev" title="前端代码命名规范"><i class="icon-arrow-left"></i></a>
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "7fbe80427f54741e289f",
+        clientSecret: "f34ed5fd92e54c9000bd37ba951948cb939deff5",
+        repo: "sanonz.github.io",
+        owner: "sanonz",
+        admin: ["sanonz"],
+        id: "2021/03/20/vue3-x学习笔记",
+        distractionFreeMode: true,
+        title: "vue3.x学习笔记",
+        body: "http://yoursite.com/2021/03/20/vue3-x%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/",
+        labels: []
+    }).render('comments');
+    </script>
+</div>
+
+
+            </div>
+        </div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e4027971a230b210f4671f485b33846a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        
+<script src="/js/scrollspy.min.js"></script>
+
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+
+        $(window).on('resize', function() {
+            var hw = $('#header').width();
+            var ww = $('#wrapper').width();
+            var space = ($(this).width() - hw - ww) / 2 / 2;
+
+            var pageprev = $('#pageprev');
+            var pagenext = $('#pagenext');
+            var avg = (pageprev.width() + pagenext.width()) / 2
+
+            if(space > avg) {
+                var len = space - avg / 2;
+                var styles = {position: 'fixed', top: '50%', marginTop: - (pageprev.width() + pagenext.width()) / 4}
+                pageprev.css($.extend({left: hw + len}, styles));
+                pagenext.css($.extend({right: len}, styles));
+            } else {
+                pageprev.removeAttr('style');
+                pagenext.removeAttr('style');
+            }
+        }).trigger('resize');
+        </script>
+    
+
+</body>
+
+<!--添加的自定义特效-->
+<!--点击爱心特效-->
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤不做咸鱼！❤","❤拒绝懒惰！❤","❤想做吃货❤","❤拒绝单身❤","❤向大佬学习❤","❤扶我起来~❤","❤come on❤","❤一直在路上~❤","❤累了~❤","❤再趴一会❤","❤66666❤","❤高兴的飞起*****❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+<!--背景特效-->
+<script type="text/javascript" color="112,128,144" opacity="0.7" zIndex="-2" count="99">
+!function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}function t(e,t){return e(t={exports:{}},t.exports),t.exports}var n=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});var n=1;t.default=function(){return""+n++},e.exports=t.default});e(n);var o=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:30,n=null;return function(){for(var o=this,i=arguments.length,r=Array(i),a=0;a<i;a++)r[a]=arguments[a];clearTimeout(n),n=setTimeout(function(){e.apply(o,r)},t)}},e.exports=t.default});e(o);var i=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0});t.SizeSensorId="size-sensor-id",t.SensorStyle="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1;opacity:0",t.SensorClassName="size-sensor-object"});e(i);i.SizeSensorId,i.SensorStyle,i.SensorClassName;var r=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,r=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,r.default)(function(){n.forEach(function(t){t(e)})}),a=function(){t&&t.parentNode&&(t.contentDocument.defaultView.removeEventListener("resize",o),t.parentNode.removeChild(t),t=void 0,n=[])};return{element:e,bind:function(r){t||(t=function(){"static"===getComputedStyle(e).position&&(e.style.position="relative");var t=document.createElement("object");return t.onload=function(){t.contentDocument.defaultView.addEventListener("resize",o),o()},t.setAttribute("style",i.SensorStyle),t.setAttribute("class",i.SensorClassName),t.type="text/html",e.appendChild(t),t.data="about:blank",t}()),-1===n.indexOf(r)&&n.push(r)},destroy:a,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&a()}}}});e(r);r.createSensor;var a=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;var n,i=(n=o)&&n.__esModule?n:{default:n};t.createSensor=function(e){var t=void 0,n=[],o=(0,i.default)(function(){n.forEach(function(t){t(e)})}),r=function(){t.disconnect(),n=[],t=void 0};return{element:e,bind:function(i){t||(t=function(){var t=new ResizeObserver(o);return t.observe(e),o(),t}()),-1===n.indexOf(i)&&n.push(i)},destroy:r,unbind:function(e){var o=n.indexOf(e);-1!==o&&n.splice(o,1),0===n.length&&t&&r()}}}});e(a);a.createSensor;var s=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.createSensor=void 0;t.createSensor="undefined"!=typeof ResizeObserver?a.createSensor:r.createSensor});e(s);s.createSensor;var u=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.removeSensor=t.getSensor=void 0;var o,r=(o=n)&&o.__esModule?o:{default:o};var a={};t.getSensor=function(e){var t=e.getAttribute(i.SizeSensorId);if(t&&a[t])return a[t];var n=(0,r.default)();e.setAttribute(i.SizeSensorId,n);var o=(0,s.createSensor)(e);return a[n]=o,o},t.removeSensor=function(e){var t=e.element.getAttribute(i.SizeSensorId);e.element.removeAttribute(i.SizeSensorId),e.destroy(),t&&a[t]&&delete a[t]}});e(u);u.removeSensor,u.getSensor;var c=t(function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.clear=t.bind=void 0;t.bind=function(e,t){var n=(0,u.getSensor)(e);return n.bind(t),function(){n.unbind(t)}},t.clear=function(e){var t=(0,u.getSensor)(e);(0,u.removeSensor)(t)}});e(c);var l=c.clear,d=c.bind,v=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||window.oRequestAnimationFrame||function(e){return window.setTimeout(e,1e3/60)},f=window.cancelAnimationFrame||window.webkitCancelAnimationFrame||window.mozCancelAnimationFrame||window.msCancelAnimationFrame||window.oCancelAnimationFrame||window.clearTimeout,m=function(e){return new Array(e).fill(0).map(function(e,t){return t})},h=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o])}return e},p=function(){function e(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,n,o){return n&&e(t.prototype,n),o&&e(t,o),t}}();var y=function(){function e(t,n){var o=this;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.randomPoints=function(){return m(o.c.count).map(function(){return{x:Math.random()*o.canvas.width,y:Math.random()*o.canvas.height,xa:2*Math.random()-1,ya:2*Math.random()-1,max:6e3}})},this.el=t,this.c=h({zIndex:-1,opacity:.5,color:"0,0,0",pointColor:"0,0,0",count:99},n),this.canvas=this.newCanvas(),this.context=this.canvas.getContext("2d"),this.points=this.randomPoints(),this.current={x:null,y:null,max:2e4},this.all=this.points.concat([this.current]),this.bindEvent(),this.requestFrame(this.drawCanvas)}return p(e,[{key:"bindEvent",value:function(){var e=this;d(this.el,function(){e.canvas.width=e.el.clientWidth,e.canvas.height=e.el.clientHeight}),this.onmousemove=window.onmousemove,window.onmousemove=function(t){e.current.x=t.clientX-e.el.offsetLeft+document.scrollingElement.scrollLeft,e.current.y=t.clientY-e.el.offsetTop+document.scrollingElement.scrollTop,e.onmousemove&&e.onmousemove(t)},this.onmouseout=window.onmouseout,window.onmouseout=function(){e.current.x=null,e.current.y=null,e.onmouseout&&e.onmouseout()}}},{key:"newCanvas",value:function(){"static"===getComputedStyle(this.el).position&&(this.el.style.position="relative");var e,t=document.createElement("canvas");return t.style.cssText="display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:"+(e=this.c).zIndex+";opacity:"+e.opacity,t.width=this.el.clientWidth,t.height=this.el.clientHeight,this.el.appendChild(t),t}},{key:"requestFrame",value:function(e){var t=this;this.tid=v(function(){return e.call(t)})}},{key:"drawCanvas",value:function(){var e=this,t=this.context,n=this.canvas.width,o=this.canvas.height,i=this.current,r=this.points,a=this.all;t.clearRect(0,0,n,o);var s=void 0,u=void 0,c=void 0,l=void 0,d=void 0,v=void 0;r.forEach(function(r,f){for(r.x+=r.xa,r.y+=r.ya,r.xa*=r.x>n||r.x<0?-1:1,r.ya*=r.y>o||r.y<0?-1:1,t.fillStyle="rgba("+e.c.pointColor+")",t.fillRect(r.x-.5,r.y-.5,1,1),u=f+1;u<a.length;u++)null!==(s=a[u]).x&&null!==s.y&&(l=r.x-s.x,d=r.y-s.y,(v=l*l+d*d)<s.max&&(s===i&&v>=s.max/2&&(r.x-=.03*l,r.y-=.03*d),c=(s.max-v)/s.max,t.beginPath(),t.lineWidth=c/2,t.strokeStyle="rgba("+e.c.color+","+(c+.2)+")",t.moveTo(r.x,r.y),t.lineTo(s.x,s.y),t.stroke()))}),this.requestFrame(this.drawCanvas)}},{key:"destroy",value:function(){l(this.el),window.onmousemove=this.onmousemove,window.onmouseout=this.onmouseout,f(this.tid),this.canvas.parentNode.removeChild(this.canvas)}}]),e}();y.version="2.0.4";var w,b;new y(document.body,(w=document.getElementsByTagName("script"),{zIndex:(b=w[w.length-1]).getAttribute("zIndex"),opacity:b.getAttribute("opacity"),color:b.getAttribute("color"),pointColor:b.getAttribute("pointColor"),count:Number(b.getAttribute("count"))||99}))}();
+</script>
+</html>
