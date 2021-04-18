@@ -10,7 +10,7 @@
     <title>vue3.x学习笔记 | 刚刚有梦想</title>
     <meta name="author" content="36.5C" />
     <meta name="keywords" content="" />
-    <meta name="description" content="vue3.x前瞻学习vue3.x相对比v2.x的不同不再支持组件data定义为对象以下写法3.x不再支持12345export default &amp;#123;  data:&amp;#123;      &amp;#125;&amp;#125;attribute取值约束调整将非props的attribute的取值对实际attribute的影响做了更加合理的判定将$listener合并入了$attrs中异步组件显式定义对异步组件的定义做了调整，需要引入defineAsyncComponent显式定义异步..." />
+    <meta name="description" content="vue3.x 前瞻学习vue3.x 相对比 v2.x 的不同不再支持组件 data 定义为对象以下写法 3.x 不再支持12345export default &amp;#123;  data:&amp;#123;  &amp;#125;&amp;#125;attribute 取值约束调整将非 props 的 attribute 的取值对实际 attribute 的影响做了更加合理的判定将$listener合并入了$attrs中异步组件显式定义对异步组件的定义做了调整，需要引入defineAsyncCom..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 
@@ -103,7 +103,7 @@
         
 
         
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#不再支持组件data定义为对象"><span class="toc-number">1.</span> <span class="toc-text">不再支持组件data定义为对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#attribute取值约束调整"><span class="toc-number">2.</span> <span class="toc-text">attribute取值约束调整</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将-listener合并入了-attrs中"><span class="toc-number">3.</span> <span class="toc-text">将$listener合并入了$attrs中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#异步组件显式定义"><span class="toc-number">4.</span> <span class="toc-text">异步组件显式定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mixin合并行为变更"><span class="toc-number">5.</span> <span class="toc-text">Mixin合并行为变更</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#废弃filter"><span class="toc-number">6.</span> <span class="toc-text">废弃filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#增加片段概念"><span class="toc-number">7.</span> <span class="toc-text">增加片段概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#template组件的性能提升"><span class="toc-number">8.</span> <span class="toc-text">template组件的性能提升</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无法再默认实现eventBus"><span class="toc-number">9.</span> <span class="toc-text">无法再默认实现eventBus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义指令生命周期方法命名更新"><span class="toc-number">10.</span> <span class="toc-text">自定义指令生命周期方法命名更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全局配置迁移"><span class="toc-number">11.</span> <span class="toc-text">全局配置迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Vue全局配置的全局API迁移"><span class="toc-number">11.1.</span> <span class="toc-text">Vue全局配置的全局API迁移</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全局API-tree-shaking"><span class="toc-number">11.2.</span> <span class="toc-text">全局API tree shaking</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#按键修饰符废除keyCode支持"><span class="toc-number">12.</span> <span class="toc-text">按键修饰符废除keyCode支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-model更新"><span class="toc-number">13.</span> <span class="toc-text">v-model更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-if和v-for优先级更改"><span class="toc-number">14.</span> <span class="toc-text">v-if和v-for优先级更改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改v-bind合并行为"><span class="toc-number">15.</span> <span class="toc-text">更改v-bind合并行为</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#不再支持组件-data-定义为对象"><span class="toc-number">1.</span> <span class="toc-text">不再支持组件 data 定义为对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#attribute-取值约束调整"><span class="toc-number">2.</span> <span class="toc-text">attribute 取值约束调整</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将-listener合并入了-attrs中"><span class="toc-number">3.</span> <span class="toc-text">将$listener合并入了$attrs中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#异步组件显式定义"><span class="toc-number">4.</span> <span class="toc-text">异步组件显式定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mixin-合并行为变更"><span class="toc-number">5.</span> <span class="toc-text">Mixin 合并行为变更</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#废弃-filter"><span class="toc-number">6.</span> <span class="toc-text">废弃 filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#增加片段概念"><span class="toc-number">7.</span> <span class="toc-text">增加片段概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#template-组件的性能提升"><span class="toc-number">8.</span> <span class="toc-text">template 组件的性能提升</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无法再默认实现-eventBus"><span class="toc-number">9.</span> <span class="toc-text">无法再默认实现 eventBus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义指令生命周期方法命名更新"><span class="toc-number">10.</span> <span class="toc-text">自定义指令生命周期方法命名更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#全局配置迁移"><span class="toc-number">11.</span> <span class="toc-text">全局配置迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Vue-全局配置的全局-API-迁移"><span class="toc-number">11.1.</span> <span class="toc-text">Vue 全局配置的全局 API 迁移</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全局-API-tree-shaking"><span class="toc-number">11.2.</span> <span class="toc-text">全局 API tree shaking</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#按键修饰符废除-keyCode-支持"><span class="toc-number">12.</span> <span class="toc-text">按键修饰符废除 keyCode 支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-model-更新"><span class="toc-number">13.</span> <span class="toc-text">v-model 更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#v-if-和-v-for-优先级更改"><span class="toc-number">14.</span> <span class="toc-text">v-if 和 v-for 优先级更改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更改-v-bind-合并行为"><span class="toc-number">15.</span> <span class="toc-text">更改 v-bind 合并行为</span></a></li></ol>
         
     </div>
 </aside>
@@ -129,73 +129,79 @@
 </a>
 
             
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/vue/" rel="tag">vue</a>
+</div>
+
 
         </div>
     </header>
     
     <section class="article-body markdown-body">
         
-        <p>vue3.x前瞻学习</p>
+        <p>vue3.x 前瞻学习</p>
 <a id="more"></a>
-<p>vue3.x相对比v2.x的不同</p>
-<h4 id="不再支持组件data定义为对象"><a href="#不再支持组件data定义为对象" class="headerlink" title="不再支持组件data定义为对象"></a>不再支持组件data定义为对象</h4><p>以下写法3.x不再支持</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data:&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="attribute取值约束调整"><a href="#attribute取值约束调整" class="headerlink" title="attribute取值约束调整"></a>attribute取值约束调整</h4><p>将非props的attribute的取值对实际attribute的影响做了更加合理的判定</p>
+<p>vue3.x 相对比 v2.x 的不同</p>
+<h4 id="不再支持组件-data-定义为对象"><a href="#不再支持组件-data-定义为对象" class="headerlink" title="不再支持组件 data 定义为对象"></a>不再支持组件 data 定义为对象</h4><p>以下写法 3.x 不再支持</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data:&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="attribute-取值约束调整"><a href="#attribute-取值约束调整" class="headerlink" title="attribute 取值约束调整"></a>attribute 取值约束调整</h4><p>将非 props 的 attribute 的取值对实际 attribute 的影响做了更加合理的判定</p>
 <h4 id="将-listener合并入了-attrs中"><a href="#将-listener合并入了-attrs中" class="headerlink" title="将$listener合并入了$attrs中"></a><mark>将<code>$listener</code>合并入了<code>$attrs</code>中</mark></h4><h4 id="异步组件显式定义"><a href="#异步组件显式定义" class="headerlink" title="异步组件显式定义"></a>异步组件显式定义</h4><p>对异步组件的定义做了调整，需要引入<code>defineAsyncComponent</code>显式定义异步组件</p>
-<h4 id="Mixin合并行为变更"><a href="#Mixin合并行为变更" class="headerlink" title="Mixin合并行为变更"></a>Mixin合并行为变更</h4><p>minxin引入组件时不会自动引入组件未定义的变量，因为3.x认为组件未定义的说明不需要<br>示例：</p>
+<h4 id="Mixin-合并行为变更"><a href="#Mixin-合并行为变更" class="headerlink" title="Mixin 合并行为变更"></a>Mixin 合并行为变更</h4><p>minxin 引入组件时不会自动引入组件未定义的变量，因为 3.x 认为组件未定义的说明不需要<br>示例：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Mixin = &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      user: &#123;</span><br><span class="line">        name: <span class="string">'Jack'</span>,</span><br><span class="line">        id: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> CompA = &#123;</span><br><span class="line">  mixins: [Mixin],</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      user: &#123;</span><br><span class="line">        id: <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>在 Vue 2.x中，生成的 $data 是：</p>
+<p>在 Vue 2.x 中，生成的 $data 是：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user: &#123;</span><br><span class="line">    id: <span class="number">2</span>,</span><br><span class="line">    name: <span class="string">'Jack'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>3.x是：</p>
+<p>3.x 是：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  user: &#123;</span><br><span class="line">    id: <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="废弃filter"><a href="#废弃filter" class="headerlink" title="废弃filter"></a>废弃filter</h4><p>废弃原因：<br>虽然这看起来很方便，但它需要一个自定义语法，打破大括号内表达式是“只是 JavaScript”的假设，这不仅有学习成本，而且有实现成本</p>
-<p><mark>完全废除filter</mark>，替换方案是用计算属性或函数，全局filter定义可以替换为全局prop定义</p>
+<h4 id="废弃-filter"><a href="#废弃-filter" class="headerlink" title="废弃 filter"></a>废弃 filter</h4><p>废弃原因：<br>虽然这看起来很方便，但它需要一个自定义语法，打破大括号内表达式是“只是 JavaScript”的假设，这不仅有学习成本，而且有实现成本</p>
+<p><mark>完全废除 filter</mark>，替换方案是用计算属性或函数，全局 filter 定义可以替换为全局 prop 定义</p>
 <h4 id="增加片段概念"><a href="#增加片段概念" class="headerlink" title="增加片段概念"></a>增加片段概念</h4><p><mark>增加了片段的概念，即组件支持返回多个节点</mark></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">   ...</span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>对片段类型组件的attr绑定可以使用v-bind=”$attrs”</p>
-<h4 id="template组件的性能提升"><a href="#template组件的性能提升" class="headerlink" title="template组件的性能提升"></a>template组件的性能提升</h4><p>vue2.x中的函数组件的渲染速度比template组件要快，因此无状态的简单组件可以使用函数组件<br>  而3.x的template的组件的性能优化已经和函数组件相差无几，因此函数组件的优势仅仅只剩定义简单组件</p>
-<h4 id="无法再默认实现eventBus"><a href="#无法再默认实现eventBus" class="headerlink" title="无法再默认实现eventBus"></a>无法再默认实现eventBus</h4><p>$on，$off 和 $once 实例方法已被移除，应用实例不再实现事件触发接口。<br>  即vue实例已经废弃了这三个方法，即通过创建 event hub，以创建在整个应用程序中使用的全局事件侦听器已经行不通了，即<mark>3.x无法再利用vue的这些特性去创建一个enevtBus(事件总线)&gt;</mark><br>  需要使用eventBus可以显式引入实现事件发射器接口的外部库：如<a href="https://github.com/developit/mitt" target="_blank" rel="noopener">mitt</a></p>
+<p>对片段类型组件的 attr 绑定可以使用 v-bind=”$attrs”</p>
+<h4 id="template-组件的性能提升"><a href="#template-组件的性能提升" class="headerlink" title="template 组件的性能提升"></a>template 组件的性能提升</h4><p>vue2.x 中的函数组件的渲染速度比 template 组件要快，因此无状态的简单组件可以使用函数组件<br>而 3.x 的 template 的组件的性能优化已经和函数组件相差无几，因此函数组件的优势仅仅只剩定义简单组件</p>
+<h4 id="无法再默认实现-eventBus"><a href="#无法再默认实现-eventBus" class="headerlink" title="无法再默认实现 eventBus"></a>无法再默认实现 eventBus</h4><p>$on，$off 和 $once 实例方法已被移除，应用实例不再实现事件触发接口。<br>即 vue 实例已经废弃了这三个方法，即通过创建 event hub，以创建在整个应用程序中使用的全局事件侦听器已经行不通了，即<mark>3.x 无法再利用 vue 的这些特性去创建一个 enevtBus(事件总线)&gt;</mark><br>需要使用 eventBus 可以显式引入实现事件发射器接口的外部库：如<a href="https://github.com/developit/mitt" target="_blank" rel="noopener">mitt</a></p>
 <h4 id="自定义指令生命周期方法命名更新"><a href="#自定义指令生命周期方法命名更新" class="headerlink" title="自定义指令生命周期方法命名更新"></a>自定义指令生命周期方法命名更新</h4><p>将自定义指令的生命周期方法的命名更新和组件生命周期方法近似一致，减少记忆成本<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqt9888zfj30r409775j.jpg" alt="QQ截图20210320235253.png"></p>
-<h4 id="全局配置迁移"><a href="#全局配置迁移" class="headerlink" title="全局配置迁移"></a>全局配置迁移</h4><h5 id="Vue全局配置的全局API迁移"><a href="#Vue全局配置的全局API迁移" class="headerlink" title="Vue全局配置的全局API迁移"></a>Vue全局配置的全局API迁移</h5><p>3.x中全局配置的API由Vue迁移到createApp返回的vue实例上<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqtgivb4gj30qv0dcdh0.jpg" alt="QQ截图20210321000421.png"><br>迁移理由：<br>2.x中Vue的全局配置会影响所有的vue实例，会强制污染一些不想有此配置的vue实例，如测试时定义的vue实例也会受到此全局配置的影响，因此对测试也带来了麻烦</p>
-<h5 id="全局API-tree-shaking"><a href="#全局API-tree-shaking" class="headerlink" title="全局API tree shaking"></a>全局API tree shaking</h5><p><mark>3.x中实现了非全局配置的全局API按需引入，有利于编译器编译时tree-shaking（性能优化）</mark></p>
-<p>示例：<br>2.x的nextTick使用</p>
+<h4 id="全局配置迁移"><a href="#全局配置迁移" class="headerlink" title="全局配置迁移"></a>全局配置迁移</h4><h5 id="Vue-全局配置的全局-API-迁移"><a href="#Vue-全局配置的全局-API-迁移" class="headerlink" title="Vue 全局配置的全局 API 迁移"></a>Vue 全局配置的全局 API 迁移</h5><p>3.x 中全局配置的 API 由 Vue 迁移到 createApp 返回的 vue 实例上<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqtgivb4gj30qv0dcdh0.jpg" alt="QQ截图20210321000421.png"><br>迁移理由：<br>2.x 中 Vue 的全局配置会影响所有的 vue 实例，会强制污染一些不想有此配置的 vue 实例，如测试时定义的 vue 实例也会受到此全局配置的影响，因此对测试也带来了麻烦</p>
+<h5 id="全局-API-tree-shaking"><a href="#全局-API-tree-shaking" class="headerlink" title="全局 API tree shaking"></a>全局 API tree shaking</h5><p><mark>3.x 中实现了非全局配置的全局 API 按需引入，有利于编译器编译时 tree-shaking（性能优化）</mark></p>
+<p>示例：<br>2.x 的 nextTick 使用</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">Vue.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 一些和DOM有关的东西</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>Vue.nextTick() 是一个全局的 API 直接暴露在单个 Vue 对象上——事实上，实例方法 $nextTick() 只是一个方便的包装 Vue.nextTick() 为方便起见，回调的 this 上下文自动绑定到当前实例。</p>
 <p>模块捆绑程序，如 webpack 支持 tree-shaking，这是“死代码消除”的一个花哨术语。不幸的是，由于代码是如何在以前的 Vue 版本中编写的，全局 API Vue.nextTick() 不可摇动，将包含在最终捆绑中不管它们实际在哪里使用</p>
-<p>3.x nextTick的使用</p>
+<p>3.x nextTick 的使用</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//按需引入，有利于tree-shaking</span></span><br><span class="line"><span class="keyword">import</span> &#123; nextTick &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line">nextTick(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 一些和DOM有关的东西</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>在 Vue 3 中，全局和内部 API 都经过了重构，并考虑到了 tree-shaking 的支持。因此，<mark>全局 API 现在只能作为 ES 模块构建的命名导出进行访问。</mark></p>
-<p>受影响的api:<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqtvh03yvj30gn0aa74q.jpg" alt="QQ截图20210321001843.png"></p>
-<h4 id="按键修饰符废除keyCode支持"><a href="#按键修饰符废除keyCode支持" class="headerlink" title="按键修饰符废除keyCode支持"></a>按键修饰符废除keyCode支持</h4><p>非兼容：不再支持使用数字 (即键码) 作为 v-on 修饰符<br>非兼容：不再支持 config.keyCodes<br>键码修饰符</p>
+<p>受影响的 api:<br><img src="http://tva1.sinaimg.cn/large/007gxmUjly1goqtvh03yvj30gn0aa74q.jpg" alt="QQ截图20210321001843.png"></p>
+<h4 id="按键修饰符废除-keyCode-支持"><a href="#按键修饰符废除-keyCode-支持" class="headerlink" title="按键修饰符废除 keyCode 支持"></a>按键修饰符废除 keyCode 支持</h4><p>非兼容：不再支持使用数字 (即键码) 作为 v-on 修饰符<br>非兼容：不再支持 config.keyCodes<br>键码修饰符</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 键码版本 --&gt;</span><br><span class="line">&lt;input v-on:keyup<span class="number">.13</span>=<span class="string">"submit"</span> /&gt;</span><br></pre></td></tr></table></figure>
 
 <p>自定义键码配置</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.keyCodes = &#123;</span><br><span class="line">  f1: <span class="number">112</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>3.x不再支持以上做法：<br>强制使用：别名版本</p>
+<p>3.x 不再支持以上做法：<br>强制使用：别名版本</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 别名版本 --&gt;</span><br><span class="line">&lt;input v-on:keyup.enter=<span class="string">"submit"</span> /&gt;</span><br></pre></td></tr></table></figure>
 
-<p>从KeyboardEvent.keyCode has been deprecated 开始，Vue 3 继续支持这一点就不再有意义了。因此，现在建议对任何要用作修饰符的键使用 kebab-cased (短横线) 大小写名称。</p>
-<h4 id="v-model更新"><a href="#v-model更新" class="headerlink" title="v-model更新"></a>v-model更新</h4><p>就变化内容而言，此部分属于高阶内容：</p>
+<p>从 KeyboardEvent.keyCode has been deprecated 开始，Vue 3 继续支持这一点就不再有意义了。因此，现在建议对任何要用作修饰符的键使用 kebab-cased (短横线) 大小写名称。</p>
+<h4 id="v-model-更新"><a href="#v-model-更新" class="headerlink" title="v-model 更新"></a>v-model 更新</h4><p>就变化内容而言，此部分属于高阶内容：</p>
 <p>非兼容：用于自定义组件时，v-model prop 和事件默认名称已更改：<br>prop：value -&gt; modelValue；<br>event：input -&gt; update:modelValue；<br>非兼容：<mark>v-bind 的 .sync 修饰符和组件的 model 选项已移除，可用 v-model 作为代替；&lt;/mark<br>新增：现在可以在同一个组件上使用多个 v-model 进行双向绑定；<br>新增：<mark>现在可以自定义 v-model 修饰符。</mark></p>
 <p><mark>在 Vue 3 中，双向数据绑定的 API 已经标准化</mark>，减少了开发者在使用 v-model 指令时的混淆并且在使用 v-model 指令时可以更加灵活。</p>
-<p>示例：移除3.xsync修饰符</p>
+<p>示例：移除 3.xsync 修饰符</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ChildComponent :title.sync=<span class="string">"pageTitle"</span> /&gt;</span><br></pre></td></tr></table></figure>
 
-<p>3.x支持组件使用多个v-model</p>
+<p>3.x 支持组件使用多个 v-model</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ChildComponent</span> <span class="attr">v-model:title</span>=<span class="string">"pageTitle"</span> <span class="attr">v-model:content</span>=<span class="string">"pageContent"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 全写： --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ChildComponent</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:title</span>=<span class="string">"pageTitle"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">update:title</span>=<span class="string">"pageTitle = $event"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:content</span>=<span class="string">"pageContent"</span></span></span><br><span class="line"><span class="tag">  @<span class="attr">update:content</span>=<span class="string">"pageContent = $event"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="v-if和v-for优先级更改"><a href="#v-if和v-for优先级更改" class="headerlink" title="v-if和v-for优先级更改"></a>v-if和v-for优先级更改</h4><p>优先级：<br>v2.x：v-for&gt;v-if<br>v3.x：v-if&gt;v-for</p>
+<h4 id="v-if-和-v-for-优先级更改"><a href="#v-if-和-v-for-优先级更改" class="headerlink" title="v-if 和 v-for 优先级更改"></a>v-if 和 v-for 优先级更改</h4><p>优先级：<br>v2.x：v-for&gt;v-if<br>v3.x：v-if&gt;v-for</p>
 <p>由于语法上存在歧义，<mark>建议避免在同一元素上同时使用两者。</mark></p>
 <p><mark>比起在模板层面管理相关逻辑，更好的办法是通过创建计算属性筛选出列表，并以此创建可见元素。</mark></p>
-<h4 id="更改v-bind合并行为"><a href="#更改v-bind合并行为" class="headerlink" title="更改v-bind合并行为"></a>更改v-bind合并行为</h4><p>不兼容：v-bind 的绑定顺序会影响渲染结果。</p>
+<h4 id="更改-v-bind-合并行为"><a href="#更改-v-bind-合并行为" class="headerlink" title="更改 v-bind 合并行为"></a>更改 v-bind 合并行为</h4><p>不兼容：v-bind 的绑定顺序会影响渲染结果。</p>
 <p>在元素上动态绑定 attribute 时，常见的场景是在一个元素中同时使用 v-bind=”object” 语法和单独的 property。然而，这就引出了关于合并的优先级的问题。<br>在 2.x，如果一个元素同时定义了 v-bind=”object” 和一个相同的单独的 property，那么这个单独的 property 总是会覆盖 object 中的绑定。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- template --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"red"</span> <span class="attr">v-bind</span>=<span class="string">"&#123; id: 'blue' &#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- result --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"red"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -229,7 +235,7 @@
         distractionFreeMode: true,
         title: "vue3.x学习笔记",
         body: "http://yoursite.com/2021/03/20/vue3-x%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/",
-        labels: []
+        labels: ["vue"]
     }).render('comments');
     </script>
 </div>
