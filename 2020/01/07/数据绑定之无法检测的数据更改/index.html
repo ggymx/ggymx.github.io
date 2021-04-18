@@ -8,7 +8,7 @@
     
 
     <title>数据绑定之无法检测的数据更改 | 刚刚有梦想</title>
-    <meta name="author" content="ggymx" />
+    <meta name="author" content="36.5C" />
     <meta name="keywords" content="" />
     <meta name="description" content="Vue组件内是双向绑定，组件间（比如父子通讯）是单向绑定（react无论组件内外都是单向数据绑定），但有三种情况下，更改组件内的数据不会自动刷新视图Vue不能检测到已有对象属性的添加或删除错误写法：this.$data.test.a=xxx正确写法：vue.set(object,key,value) 或 Object.assign()示例：12345678910111213141516171819202122232425262728&amp;lt;script&amp;gt;  export ..." />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -17,8 +17,6 @@
     
     <link rel="alternate" href="/atom.xml" title="刚刚有梦想" type="application/atom+xml">
     
-    
-    <link rel="icon" href="/images/avatar.ico">
     
 
     <style type="text/css">
